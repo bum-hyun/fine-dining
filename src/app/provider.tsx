@@ -2,6 +2,8 @@
 
 import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import useInitializeWorker from '@/hooks/useInitializeWorker';
+
 function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
@@ -30,6 +32,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   //       suspend because React will throw away the client on the initial
   //       render if it suspends and there is no boundary
   const queryClient = getQueryClient();
+
+  const isWorking = useInitializeWorker();
+
+  if (!isWorking) return <body></body>;
 
   return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }

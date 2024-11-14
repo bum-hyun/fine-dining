@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect } from 'react';
 import { css } from 'styled-system/css';
 import { flex } from 'styled-system/patterns';
 
@@ -6,6 +9,12 @@ import { useGetRestaurants } from '@/services/restaurant';
 
 export default function Home() {
   const { data } = useGetRestaurants();
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+  }, [data]);
 
   return (
     <div className={css({ overflow: 'hidden' })}>
