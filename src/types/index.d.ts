@@ -1,0 +1,3 @@
+interface IRestaurant {
+  title: string;
+}
