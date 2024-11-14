@@ -11,10 +11,12 @@
   "dependencies": {
     "dayjs": "^1.11.13",
     "heic2any": "^0.0.4",
+    "immer": "^10.1.1",
     "ky": "^1.7.2",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106"
+    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@pandacss/dev": "^0.47.1",
@@ -25,7 +27,22 @@
     "eslint-config-next": "15.0.3",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "msw": "^2.6.4",
     "prettier": "^3.3.3",
     "typescript": "^5"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "echo 'pre commit....'",
+      "pre-push": "echo 'pre push....'"
+    }
   }
 }
