@@ -18,7 +18,6 @@ const ellipsis = definePattern({
       WebkitLineClamp: lines,
       maxWidth,
       display: 'flex',
-      whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
       WebkitBoxOrient: 'vertical',

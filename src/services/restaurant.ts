@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { api } from '@/services/api';
 
 export const useGetRestaurants = () =>
-  useQuery({
+  useQuery<IRestaurant[], Error>({
     queryKey: ['restaurants'],
     queryFn: api.get('restaurants').json,
   });
