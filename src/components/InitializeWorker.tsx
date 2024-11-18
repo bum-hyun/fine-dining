@@ -16,7 +16,9 @@ const InitializeWorker = ({ children }: { children: React.ReactNode }) => {
         server.listen();
       } else {
         const { worker } = await import('@/mocks/browser');
-        await worker.start();
+        await worker.start({
+          onUnhandledRequest: 'bypass',
+        });
       }
       setIsWorking(true);
       console.log('worker started');

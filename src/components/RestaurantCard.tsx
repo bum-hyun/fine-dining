@@ -19,6 +19,7 @@ const RestaurantCard = ({ item }: IRestaurantCardProps) => {
         <h5>{item.name}</h5>
         <p className={description}>{item.description}</p>
       </div>
+      <OverlayLink href={`/restaurant/${1}`} />
     </li>
   );
 };
@@ -32,6 +33,11 @@ const container = css({
   flexDirection: 'column',
   maxWidth: '300px',
   boxShadow: '0 0 8px rgba(0, 0, 0, 0.3)',
+  transition: 'all ease-in-out 0.2s',
+
+  '&:hover': {
+    transform: 'translateY(2px)',
+  },
 });
 
 const infoWrap = css({

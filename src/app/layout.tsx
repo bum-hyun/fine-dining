@@ -1,6 +1,7 @@
 import './globals.css';
 
 import type { Metadata } from 'next';
+import { css } from 'styled-system/css';
 
 import Providers from '@/app/provider';
 import InitializeWorker from '@/components/InitializeWorker';
@@ -22,11 +23,23 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <Providers>
         {env === 'development' && (
           <InitializeWorker>
-            <body>{children}</body>
+            <body>
+              <header className={header}>여기가 헤더여</header>
+              {children}
+            </body>
           </InitializeWorker>
         )}
-        {env !== 'development' && <body>{children}</body>}
+        {env !== 'development' && (
+          <body>
+            <header className={header}>여기가 헤더여</header>
+            {children}
+          </body>
+        )}
       </Providers>
     </html>
   );
 }
+
+const header = css({
+  padding: '16px',
+});

@@ -21,6 +21,7 @@ const ellipsis = definePattern({
       overflow: 'hidden',
       textOverflow: 'ellipsis',
       WebkitBoxOrient: 'vertical',
+      wordBreak: 'break-word',
     };
   },
 });

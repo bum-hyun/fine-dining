@@ -9,10 +9,17 @@ export const handlers = [
       { id: '4', name: 'Arzak', description: '안가본 곳' },
       { id: '5', name: 'Akelarre', description: '뷰는 좋은데 맛은 3스타급이 아닌 곳' },
       { id: '6', name: 'Mingles', description: '한국에서 잘나가는 곳' },
-      { id: '7', name: 'Y\'east', description: 'Maverick' },
+      { id: '7', name: '"Y\'east"', description: 'Maverick' },
       { id: '8', name: 'Soigne', description: 'Maverick' },
       { id: '9', name: 'Diver XO', description: 'Maverick' },
       { id: '10', name: 'Disfurtar', description: 'Maverick' },
+    ]);
+    // return new HttpResponse(null, { status: 401 })
+  }),
+
+  http.get('/restaurant', () => {
+    return HttpResponse.json([
+      { id: '1', name: 'Asador Extebarri', description: '스페인 빌바오에 위치한, 숯을 이용해 요리 스페인 빌바오에 위치한, 숯을 이용해 요리 스페인 빌바오에 위치한, 숯을 이용해 요리' },
     ]);
     // return new HttpResponse(null, { status: 401 })
   }),

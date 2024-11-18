@@ -1,5 +1,9 @@
 @layer reset, base, tokens, recipes, utilities;
 
+* {
+outline: none;
+}
+
 h1 {
   font-size: 32px;
   font-weight: bold;
@@ -28,4 +32,9 @@ h5 {
 h6 {
   font-size: 12px;
   font-weight: bold;
+}
+
+a, button:enabled {
+  cursor: pointer;
+  touch-action: manipulation;
 }

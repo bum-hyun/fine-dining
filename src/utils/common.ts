@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 export const isEmpty = (value: unknown) => {
   if (value == null) return true;
@@ -6,7 +6,7 @@ export const isEmpty = (value: unknown) => {
   if (Array.isArray(value)) return value.length === 0;
   if (typeof value === 'object') return Object.keys(value).length === 0;
   return false;
-}
+};
 
 export const passedTimeOfContents = (date: string) => {
   const start = dayjs(date);
@@ -83,4 +83,3 @@ export const generateThumbnail = (videoFile: File, time = 0): Promise<File> => {
     };
   });
 };
-
