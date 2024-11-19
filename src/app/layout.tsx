@@ -21,20 +21,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ko">
       <Providers>
-        {env === 'development' && (
-          <InitializeWorker>
-            <body>
-              <header className={header}>여기가 헤더여</header>
-              {children}
-            </body>
-          </InitializeWorker>
-        )}
-        {env !== 'development' && (
-          <body>
-            <header className={header}>여기가 헤더여</header>
-            {children}
-          </body>
-        )}
+        <body>
+          <header className={header}>여기가 헤더여</header>
+          {children}
+        </body>
       </Providers>
     </html>
   );

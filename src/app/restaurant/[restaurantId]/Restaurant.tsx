@@ -14,7 +14,6 @@ interface IRestaurantProps {
 
 const Restaurant = ({ initialData }: IRestaurantProps) => {
   console.log(initialData.data);
-  const { data } = useGetRestaurant();
 
   const sanitizedHTML = DOMPurify.sanitize(JSON.parse(initialData.data.content).content);
 
