@@ -60,13 +60,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Generate pre-signed URL
     const preSignedUrl = await generatePresignedUrl(name, type);
-
-    // Construct the file's public URL
     const fileUrl = `https://${Bucket}.s3.${Region}.amazonaws.com/image/${name}`;
-
-    // Save metadata to MongoDB
     const result = await saveFile({ ...body, url: fileUrl });
 
     return NextResponse.json({ id: result.insertedId, ...body, url: fileUrl, preSignedUrl });
