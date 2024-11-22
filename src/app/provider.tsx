@@ -2,6 +2,8 @@
 
 import { isServer, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import OverlayProvider from '@/components/Overlay/OverlayProvider';
+
 function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
@@ -35,5 +37,9 @@ export default function Providers({ children }: RootLayoutProps) {
   //       render if it suspends and there is no boundary
   const queryClient = getQueryClient();
 
-  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <OverlayProvider>{children}</OverlayProvider>
+    </QueryClientProvider>
+  );
 }

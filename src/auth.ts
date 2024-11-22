@@ -31,10 +31,9 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
 
         const user = await getUserFromDb({ email });
         if (!user) {
-          throw new CustomAuthError('등록되지 않은 이메일 주소입니다.');
+          throw new CustomAuthError('등록되지 않은 이메일 주소입니다.  회원가입으로 이동해주세요.');
         }
 
-        // 비밀번호 확인
         const passwordsMatch = await bcrypt.compare(password, user.password);
         if (!passwordsMatch) {
           throw new CustomAuthError('비밀번호가 올바르지 않습니다.');

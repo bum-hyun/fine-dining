@@ -51,6 +51,8 @@
     "react-hooks/exhaustive-deps": "warn", // useEffect 종속성 경고
 
     // 기타 규칙
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/anchor-is-valid": "warn", // 접근성 경고
     "@typescript-eslint/no-explicit-any": "warn", // any 사용 경고
     "simple-import-sort/imports": "error",

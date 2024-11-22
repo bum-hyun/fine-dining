@@ -1,46 +1,53 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useRouter } from 'next/navigation';
+import { FormEvent } from 'react';
 import { css } from 'styled-system/css';
 
 import { Button } from '@/components/Button';
-import { authenticate } from '@/lib/actions';
 
 export default function LoginForm() {
-  const [errorMessage, formAction] = useActionState(authenticate, undefined);
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const email = formData.get('email');
+    const password = formData.get('password');
+
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    console.log(response);
+    if (response.ok) {
+    } else {
+      // Handle errors
+    }
+  };
 
   return (
-    <div className={container}>
-      <div className={loginCard}>
+    <div className={loginCard}>
+      <form onSubmit={handleLogin}>
         <div>
-          <form action={''}></form>
+          <label htmlFor={'email'} className={label}>
+            이메일
+          </label>
+          <input id={'email'} name={'email'} className={input} placeholder={'이메일을 입력해주세요.'} />
         </div>
-        <form action={formAction}>
-          <div>
-            <label htmlFor={'email'} className={label}>
-              이메일
-            </label>
-            <input id={'email'} className={input} placeholder={'이메일을 입력해주세요.'} required />
-          </div>
-          <div className={css({ marginTop: '1rem' })}>
-            <label htmlFor={'password'} className={label}>
-              비밀번호
-            </label>
-            <input id={'password'} className={input} placeholder={'비밀번호를 입력해주세요.'} required />
-          </div>
-          {errorMessage && <div className={errorStyle}>{errorMessage}</div>}
-          <Button variant={'outline'}>로그인</Button>
-        </form>
-        <Button variant={'solid'}>회원가입</Button>
-      </div>
+        <div className={css({ marginTop: '1rem' })}>
+          <label htmlFor={'password'} className={label}>
+            비밀번호
+          </label>
+          <input id={'password'} name={'password'} className={input} placeholder={'비밀번호를 입력해주세요.'} />
+        </div>
+        <Button className={loginButton}>계속</Button>
+      </form>
     </div>
   );
 }
 
-const container = css({ position: 'fixed', width: '100%', height: '100%', display: 'grid', placeItems: 'center', margin: 0, padding: 0 });
-
 const loginCard = css({
-  width: '368px',
   margin: '2rem 0',
   padding: '1.25rem 2rem',
   backgroundColor: '#fff',
@@ -68,5 +75,5 @@ const errorStyle = css({
 
 const loginButton = css({
   width: '100%',
-  marginTop: '2rem',
+  marginTop: '1rem',
 });

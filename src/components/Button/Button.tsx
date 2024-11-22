@@ -3,11 +3,14 @@ import { cva } from 'styled-system/css';
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'solid' | 'outline' | 'ghost';
   size?: 'sm' | 'md' | 'lg';
+  className?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ children, variant, size, ...props }) => {
+const Button: React.FC<ButtonProps> = ({ children, variant, size, className, ...props }) => {
+  const combinedClassName = `${button({ variant, size })} ${className || ''}`.trim();
+
   return (
-    <button className={button({ variant, size })} {...props}>
+    <button className={combinedClassName} {...props}>
       {children}
     </button>
   );
@@ -32,26 +35,26 @@ const button = cva({
   variants: {
     variant: {
       solid: {
-        backgroundColor: 'blue.500',
+        backgroundColor: 'orange.500',
         color: 'white',
         _hover: {
-          backgroundColor: 'blue.600',
+          backgroundColor: 'orange.600',
         },
       },
       outline: {
         backgroundColor: 'transparent',
         border: '2px solid',
-        borderColor: 'blue.500',
-        color: 'blue.500',
+        borderColor: 'orange.500',
+        color: 'orange.500',
         _hover: {
-          backgroundColor: 'blue.50',
+          backgroundColor: 'orange.50',
         },
       },
       ghost: {
         backgroundColor: 'transparent',
-        color: 'blue.500',
+        color: 'orange.500',
         _hover: {
-          backgroundColor: 'blue.100',
+          backgroundColor: 'orange.100',
         },
       },
     },

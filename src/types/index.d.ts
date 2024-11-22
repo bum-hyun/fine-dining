@@ -21,3 +21,9 @@ interface IFile {
   size: number;
   url: string;
 }
+
+interface IModalProps {
+  visible?: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+}
