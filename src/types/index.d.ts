@@ -1,7 +1,16 @@
 interface IRestaurant {
-  id: number;
+  id?: number;
   name: string;
+  address: string;
+  email: string;
   description: string;
+  is_only_course: boolean;
+  tel: string;
+  reservation_url: string;
+  tags: string[];
+  launch_price: number;
+  dinner_price: number;
+  thumbnail?: string;
 }
 
 interface IUploadFileParams {

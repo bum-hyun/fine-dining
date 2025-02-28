@@ -1,9 +1,10 @@
 import './globals.css';
 
 import type { Metadata } from 'next';
+import { css } from 'styled-system/css';
 
+import Header from '@/app/header';
 import Providers from '@/app/provider';
-import Header from '@/app/ui/header';
 
 export const metadata: Metadata = {
   title: '타이틀',
@@ -15,13 +16,21 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
+  const env = process.env.NODE_ENV;
+
   return (
     <html lang="ko">
       <Providers>
-        <body>
+        <body className={css({ display: 'flex', flexDirection: 'column', height: '100vh' })}>
           <Header />
           {children}
         </body>
+        {/*{env === 'development' && (*/}
+        {/*  <InitializeWorker>*/}
+        {/*    <body>{children}</body>*/}
+        {/*  </InitializeWorker>*/}
+        {/*)}*/}
+        {/*{env !== 'development' && <body>{children}</body>}*/}
       </Providers>
     </html>
   );

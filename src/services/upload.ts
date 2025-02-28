@@ -1,9 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { postFileUploadApi } from '@/services/restaurant/api';
-
-export const usePostFile = () =>
+export const useUploadFile = () =>
   useMutation({
-    mutationKey: ['usePostFile'],
-    mutationFn: (searchParams: IUploadFileParams) => postFileUploadApi(searchParams),
+    mutationKey: ['file_upload'],
+    mutationFn: ({ file, width, height, thumbUrl }: { file: File; width?: number; height?: number; thumbUrl?: string }) => uploadFileApi(file, width, height, thumbUrl),
   });

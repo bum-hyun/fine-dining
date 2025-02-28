@@ -1,8 +1,9 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { css } from 'styled-system/css';
 import { ellipsis } from 'styled-system/patterns';
 
-import OverlayLink from '@/components/OverlayLink';
+import RestaurantTags from '@/components/RestaurantTags';
 
 interface IRestaurantCardProps {
   item: IRestaurant;
@@ -10,17 +11,16 @@ interface IRestaurantCardProps {
 
 const RestaurantCard = ({ item }: IRestaurantCardProps) => {
   return (
-    <li className={container}>
-      <OverlayLink href={''} />
-      <div className={imageWrapper}>
-        <Image src={'https://vip.teepee.kr/2024/11/13/09/33/05/a5ee4198-7ac5-4590-bab7-848c10c35e08.png?width=500'} alt={'image'} width={500} height={500} />
-      </div>
+    <article className={container}>
+      <Link href={''} className={imageWrapper}>
+        <Image className={image} src={item.thumbnail} alt={'image'} width={500} height={500} />
+      </Link>
       <div className={infoWrap}>
-        <h5>{item.name}</h5>
+        <RestaurantTags tags={item.tags} />
+        <h2 className={name}>{item.name}</h2>
         <p className={description}>{item.description}</p>
       </div>
-      <OverlayLink href={`/restaurant/${1}`} />
-    </li>
+    </article>
   );
 };
 
@@ -31,23 +31,34 @@ const container = css({
   position: 'relative',
   display: 'inline-flex',
   flexDirection: 'column',
-  maxWidth: '300px',
-  boxShadow: '0 0 8px rgba(0, 0, 0, 0.3)',
-  transition: 'all ease-in-out 0.2s',
-
-  '&:hover': {
-    transform: 'translateY(2px)',
-  },
 });
 
 const infoWrap = css({
   display: 'flex',
   flexDirection: 'column',
-  padding: '16px',
+  marginTop: '8px',
+  overflowX: 'hidden',
 });
 
 const imageWrapper = css({
+  position: 'relative',
   display: 'flex',
+  width: '236px',
+  height: '315px',
+  backgroundColor: '#7c7c7c',
+  borderRadius: '16px',
+  overflow: 'hidden',
+});
+
+const image = css({
+  objectFit: 'cover',
+});
+
+const name = css({
+  marginTop: '4px',
+  fontSize: '14px',
+  fontWeight: '600',
+  color: '#111',
 });
 
 const description = ellipsis({

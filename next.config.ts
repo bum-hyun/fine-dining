@@ -6,7 +6,23 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**.teepee.kr',
+        hostname: 'www.restaurant-mingles.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'abacrestaurant.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.martinberasategui.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'akelarre.net',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.supabase.co',
       },
     ],
   },
