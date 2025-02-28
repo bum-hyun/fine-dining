@@ -13,7 +13,7 @@ const RestaurantCard = ({ item }: IRestaurantCardProps) => {
   return (
     <article className={container}>
       <Link href={''} className={imageWrapper}>
-        <Image className={image} src={item.thumbnail} alt={'image'} width={500} height={500} />
+        <Image className={image} src={item.thumbnail || ''} alt={'image'} width={500} height={500} />
       </Link>
       <div className={infoWrap}>
         <RestaurantTags tags={item.tags} />

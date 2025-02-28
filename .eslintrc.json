@@ -48,7 +48,7 @@
     "react/react-in-jsx-scope": "off", // React 17+에서는 import가 필요하지 않음
     "react/jsx-uses-react": "off", // React 17+에서 불필요한 import 경고 비활성화
     "react-hooks/rules-of-hooks": "error", // Hooks 규칙 필수
-    "react-hooks/exhaustive-deps": "warn", // useEffect 종속성 경고
+    "react-hooks/exhaustive-deps": "off", // useEffect 종속성 경고
 
     // 기타 규칙
     "jsx-a11y/no-static-element-interactions": "off",

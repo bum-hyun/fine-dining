@@ -12,6 +12,20 @@ export const getRestaurants = async () => {
   return data;
 };
 
+export const getRestaurant = async (id: number) => {
+  const { data, error } = await supabase.from(database).select('*').eq('id', id).single();
+
+  if (error) {
+    throw new Error(`GET Error: ${error.message}`);
+  }
+
+  if (!data) {
+    throw new Error('No restaurant found with the given ID');
+  }
+
+  return data;
+};
+
 export const postRestaurant = async (payload: IRestaurant): Promise<IRestaurant> => {
   const { data, error } = await supabase.from(database).insert(payload).select();
 

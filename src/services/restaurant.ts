@@ -1,11 +1,17 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { deleteRestaurant, getRestaurants, postRestaurant, putRestaurant } from '@/services/supabase_api';
+import { deleteRestaurant, getRestaurant, getRestaurants, postRestaurant, putRestaurant } from '@/services/supabase_api';
 
 export const useGetRestaurants = () =>
-  useQuery({
+  useQuery<IRestaurant[]>({
     queryKey: ['restaurants'],
     queryFn: getRestaurants,
+  });
+
+export const useGetRestaurant = (id: number) =>
+  useQuery<IRestaurant>({
+    queryKey: ['restaurant'],
+    queryFn: () => getRestaurant(id),
   });
 
 export const usePostRestaurant = () =>
