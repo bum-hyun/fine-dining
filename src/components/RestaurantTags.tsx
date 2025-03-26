@@ -38,6 +38,16 @@ const RestaurantTags = ({ tags }: IRestaurantTagsProps) => {
 
   useEffect(() => {
     checkScroll();
+
+    const handleResize = () => {
+      checkScroll();
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, [checkScroll]);
 
   if (isEmpty(tags)) return <></>;
@@ -81,7 +91,6 @@ const tagContainer = css({
 
 const tagList = css({
   display: 'flex',
-  maxWidth: '236px',
   flexWrap: 'nowrap',
   gap: '4px',
   overflowX: 'auto',

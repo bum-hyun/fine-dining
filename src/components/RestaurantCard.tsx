@@ -42,15 +42,14 @@ const RestaurantCard = ({ item }: IRestaurantCardProps) => {
 export default RestaurantCard;
 
 const containerStyle = css({
-  flex: 'none',
   position: 'relative',
-  maxWidth: '236px',
+  width: '100%',
 });
 
 const imageWrapStyle = css({
   position: 'relative',
   display: 'flex',
-  width: '236px',
+  width: '100%',
   height: '315px',
   backgroundColor: '#7c7c7c',
   borderRadius: '16px',
