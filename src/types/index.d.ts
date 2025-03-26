@@ -19,3 +19,13 @@ interface IModalProps {
   onClose: () => void;
   children: React.ReactNode;
 }
+
+interface IUser {
+  name: string;
+  email: string;
+  nickname: string;
+  avatar_url: string;
+  role?: string;
+  id?: string;
+  provider?: string;
+}

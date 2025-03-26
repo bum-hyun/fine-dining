@@ -2,21 +2,24 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { css } from 'styled-system/css';
 
 import Button from '@/components/Button/Button';
 import Modal from '@/components/Overlay/Modal';
 import { ROUTE_PATHS } from '@/constants/pathname';
+import { useUserStore } from '@/stores/userStore';
 import browserClient from '@/utils/supabase/client';
 
 const Header = () => {
   const router = useRouter();
+  const { user, setUser } = useUserStore();
 
   const [visible, setVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   const signInWithKakao = async () => {
-    await browserClient.auth.signInWithOAuth({
+    const response = await browserClient.auth.signInWithOAuth({
       provider: 'kakao',
       options: {
         redirectTo: process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/callback` : 'http://localhost:3000/auth/callback',
@@ -24,8 +27,32 @@ const Header = () => {
     });
   };
 
+  const getUser = async () => {
+    const {
+      data: { user },
+    } = await browserClient.auth.getUser();
+    console.log('여기는 getuser', user);
+    if (!user) return;
+    setUser({
+      name: user?.user_metadata.name,
+      email: user?.user_metadata.email,
+      nickname: user?.user_metadata.nickname,
+      avatar_url: user?.user_metadata.avatar_url,
+      role: user?.role,
+      id: user?.id,
+      provider: user?.app_metadata.provider,
+    });
+
+    return user;
+  };
+
   const handleClickLogin = useCallback(() => {
     setVisible(true);
+  }, []);
+
+  useEffect(() => {
+    getUser();
+    setIsMounted(true);
   }, []);
 
   return (
@@ -42,17 +69,19 @@ const Header = () => {
         </div>
       </div>
       <div className={emptyHeightStyle} />
-      <Modal visible={visible} onClose={() => setVisible(false)}>
-        <div className={loginCardStyle}>
-          <div className={doLoginTextStlye}>로그인 하기</div>
-          <Button className={buttonStyle} onClick={signInWithKakao}>
-            <div className={kakaoLoginStyle}>
-              <Image src={'small_kakao.svg'} alt={'카카오 아이콘'} width={18} height={18} />
-              <span>카카오 로그인</span>
-            </div>
-          </Button>
-        </div>
-      </Modal>
+      {isMounted && (
+        <Modal visible={visible} onClose={() => setVisible(false)}>
+          <div className={loginCardStyle}>
+            <div className={doLoginTextStlye}>로그인 하기</div>
+            <Button className={buttonStyle} onClick={signInWithKakao}>
+              <div className={kakaoLoginStyle}>
+                <Image src={'small_kakao.svg'} alt={'카카오 아이콘'} width={18} height={18} />
+                <span>카카오 로그인</span>
+              </div>
+            </Button>
+          </div>
+        </Modal>
+      )}
     </>
   );
 };
