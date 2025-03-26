@@ -24,6 +24,7 @@ const EditRestaurantForm = ({ payload, setPayload, editRestaurant }: IEditRestau
     { label: '예약 페이지', name: 'reservation_url' },
     { label: '런치 가격', name: 'launch_price', type: 'number' },
     { label: '디너 가격', name: 'dinner_price', type: 'number' },
+    { label: '통화', name: 'currency' },
     { label: '태그', name: 'tags' },
   ];
 
@@ -68,7 +69,13 @@ const EditRestaurantForm = ({ payload, setPayload, editRestaurant }: IEditRestau
       <div className={css({ maxWidth: '768px', margin: 'auto' })}>
         <div className={flex({ flexDirection: 'column', padding: '16px', gap: '24px' })}>
           <button className={imageWrapStyle} onClick={() => inputRef.current?.click()} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
-            {isHover && <div className={imageWrapOverlayStyle} />}
+            {isHover && (
+              <div className={imageWrapOverlayStyle}>
+                <div className={buttonWrapStyle}>
+                  <button className={buttonStyle}>업로드</button>
+                </div>
+              </div>
+            )}
             {payload.thumbnail && <Image className={imageStyle} src={payload.thumbnail} width={236} height={315} alt={''} />}
             <input className={invisibleInputStyle} ref={inputRef} name={'thumbnail'} type={'file'} accept={'image/*'} onChange={handleUploadThumbnail} tabIndex={-1} />
           </button>
@@ -82,8 +89,8 @@ const EditRestaurantForm = ({ payload, setPayload, editRestaurant }: IEditRestau
             </div>
           ))}
 
-          <div className={buttonWrapStyle}>
-            <button className={buttonStyle} onClick={editRestaurant}>
+          <div className={submitButtonWrapStyle}>
+            <button className={submitButtonStyle} onClick={editRestaurant}>
               등록
             </button>
           </div>
@@ -115,6 +122,9 @@ const imageWrapOverlayStyle = css({
   position: 'absolute',
   top: 0,
   left: 0,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
   width: '100%',
   height: '100%',
   backgroundColor: '#00000080',
@@ -140,13 +150,13 @@ const inputStyle = css({
   outline: 'none',
 });
 
-const buttonWrapStyle = css({
+const submitButtonWrapStyle = css({
   display: 'flex',
   justifyContent: 'center',
   marginTop: '16px',
 });
 
-const buttonStyle = css({
+const submitButtonStyle = css({
   padding: '8px 16px',
   color: '#fff',
   backgroundColor: '#32bc69',
@@ -171,4 +181,20 @@ const invisibleInputStyle = css({
 const imageStyle = css({
   width: '100%',
   height: '100%',
+  objectFit: 'cover',
+});
+
+const buttonWrapStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '16px',
+});
+
+const buttonStyle = css({
+  padding: '8px 16px',
+  fontSize: '16px',
+  fontWeight: '600',
+  color: '#ffffff',
+  backgroundColor: '#737373',
+  borderRadius: '4px',
 });

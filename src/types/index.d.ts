@@ -11,28 +11,11 @@ interface IRestaurant {
   launch_price: number;
   dinner_price: number;
   thumbnail?: string;
-}
-
-interface IUploadFileParams {
-  file: File;
-  width?: number;
-  height?: number;
-  thumbUrl?: string;
-}
-
-interface IFile {
-  id: string;
-  preSignedUrl: string;
-  name: string;
-  type: string;
-  width?: number;
-  height?: number;
-  size: number;
-  url: string;
+  currency: string;
 }
 
 interface IModalProps {
-  visible?: boolean;
+  visible: boolean;
   onClose: () => void;
   children: React.ReactNode;
 }

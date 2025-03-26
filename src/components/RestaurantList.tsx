@@ -10,7 +10,7 @@ const RestaurantList = () => {
   const { data } = useGetRestaurants();
 
   return (
-    <div className={css({})}>
+    <div>
       <div className={flex({ gap: '16px', flexWrap: 'wrap' })}>{data?.map((item, index) => <RestaurantCard key={index} item={item} />)}</div>
     </div>
   );

@@ -4,7 +4,7 @@ const ROUTE_KEYS = {
 };
 
 export const ROUTE_PATHS = {
-  HOME: ROUTE_KEYS.HOME,
+  HOME: `/${ROUTE_KEYS.HOME}`,
   ADMIN: {
     ROOT: `/${ROUTE_KEYS.ADMIN}`,
     LIST: `/${ROUTE_KEYS.ADMIN}/list`,

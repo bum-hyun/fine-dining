@@ -1,5 +1,6 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -11,6 +12,7 @@ const Page = () => {
   const router = useRouter();
   const params = useParams();
   const id = params.id;
+  const queryClient = useQueryClient();
 
   const [payload, setPayload] = useState<IRestaurant>({
     name: '',
@@ -23,6 +25,7 @@ const Page = () => {
     tags: [],
     launch_price: 0,
     dinner_price: 0,
+    currency: 'won',
   });
 
   const { data } = useGetRestaurant(Number(id));
@@ -31,6 +34,7 @@ const Page = () => {
   const editRestaurant = useCallback(async () => {
     try {
       await putRestaurant(payload);
+      await queryClient.invalidateQueries({ queryKey: ['restaurants'] });
       router.push(`${ROUTE_PATHS.ADMIN.LIST}`);
     } catch (error) {
       console.log(error);
