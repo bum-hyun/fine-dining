@@ -14,6 +14,7 @@ export const ROUTE_PATHS = {
   RESTAURANT: {
     ROOT: `/${ROUTE_KEYS.RESTAURANT}`,
     DETAIL: `/${ROUTE_KEYS.RESTAURANT}/[restaurantId]`,
-    REVIEW: `/${ROUTE_KEYS.RESTAURANT}/[restaurantId]/review`,
+    REVIEW: `/${ROUTE_KEYS.RESTAURANT}/review/[restaurantId]`,
+    EDIT: `/${ROUTE_KEYS.RESTAURANT}/review/edit`,
   },
 };

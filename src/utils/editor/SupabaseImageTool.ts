@@ -17,7 +17,6 @@ export default class SupabaseImageTool {
   private isInitialRender = true;
 
   constructor({ data, api, block }: any) {
-    console.log(data);
     this.data = data || {};
     this.api = api;
     this.block = block;

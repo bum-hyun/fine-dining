@@ -1,12 +1,15 @@
 'use client';
 
+import EditorJSHTML from 'editorjs-html';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { css } from 'styled-system/css';
 
 import Button from '@/components/Button/Button';
 import { ROUTE_PATHS } from '@/constants/pathname';
+import { usePostRestaurantReview } from '@/services/restaurant_review';
+import { useEditorStore } from '@/stores/editorStore';
 import { useUserStore } from '@/stores/userStore';
 import browserClient from '@/utils/supabase/client';
 
@@ -17,9 +20,17 @@ const LoginModal = dynamic(() => import('@/components/home/LoginModal'), {
 
 const Header = () => {
   const router = useRouter();
-  const { isLoggedIn, setUser } = useUserStore();
+  const pathname = usePathname();
+  const params = useParams();
+
+  const { isLoggedIn, user, setUser } = useUserStore();
+  const { editor } = useEditorStore();
 
   const [visible, setVisible] = useState(false);
+
+  const { mutateAsync } = usePostRestaurantReview();
+
+  const isEditPostPage = pathname === ROUTE_PATHS.RESTAURANT.EDIT;
 
   const getUser = async () => {
     const {
@@ -27,13 +38,13 @@ const Header = () => {
     } = await browserClient.auth.getUser();
     if (!user) return;
     setUser({
-      name: user?.user_metadata.name,
-      email: user?.user_metadata.email,
-      nickname: user?.user_metadata.nickname,
-      avatar_url: user?.user_metadata.avatar_url,
-      role: user?.role,
-      id: user?.id,
-      provider: user?.app_metadata.provider,
+      name: user.user_metadata.name,
+      email: user.user_metadata.email,
+      nickname: user.user_metadata.nickname,
+      avatar_url: user.user_metadata.avatar_url,
+      role: user.role,
+      id: user.id,
+      provider: user.app_metadata.provider,
     });
 
     return user;
@@ -43,10 +54,32 @@ const Header = () => {
     setVisible(true);
   }, []);
 
-  const handleClickLogout = useCallback(async () => {
+  const handleClickLogout = async () => {
     const { error } = await browserClient.auth.signOut();
     if (!error) setUser(null);
-  }, []);
+  };
+
+  console.log(params);
+  const handleClickEdit = async () => {
+    const data = await editor!.save();
+    console.log(data);
+    const edjsParser = EditorJSHTML();
+    const htmlBlocks = edjsParser.parse(data);
+    console.log('HTML 결과:', htmlBlocks);
+
+    const payload: IPostRestaurantReview = {
+      editor_object: data,
+      editor_html: htmlBlocks,
+      restaurant_id: Number(params.restaurantId),
+      title: '',
+      user_id: user!.id,
+    };
+
+    console.log(payload);
+
+    return;
+    await mutateAsync(payload);
+  };
 
   useEffect(() => {
     getUser();
@@ -61,8 +94,13 @@ const Header = () => {
           </span>
         </div>
         <div className={rightSideContainerStyle}>
-          {!isLoggedIn && <Button onClick={handleClickLogin}>로그인</Button>}
-          {isLoggedIn && <Button onClick={handleClickLogout}>로그아웃</Button>}
+          {isEditPostPage && <Button onClick={handleClickEdit}>등록</Button>}
+          {!isEditPostPage && (
+            <>
+              {!isLoggedIn && <Button onClick={handleClickLogin}>로그인</Button>}
+              {isLoggedIn && <Button onClick={handleClickLogout}>로그아웃</Button>}
+            </>
+          )}
         </div>
       </div>
       <div className={emptyHeightStyle} />

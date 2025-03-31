@@ -22,11 +22,14 @@ const Page = () => {
 export default Page;
 
 const editorContainerStyle = css({
+  position: 'relative',
   maxWidth: '900px',
+  width: '100%',
   margin: '60px auto',
 });
 
 const titleContainerStyle = css({
+  marginBottom: '16px',
   borderBottom: '1px solid #ddd',
 });
 
