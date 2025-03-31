@@ -1,14 +1,19 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { css } from 'styled-system/css';
 
 import Button from '@/components/Button/Button';
-import LoginModal from '@/components/home/LoginModal';
 import { ROUTE_PATHS } from '@/constants/pathname';
 import { useUserStore } from '@/stores/userStore';
 import browserClient from '@/utils/supabase/client';
+
+const LoginModal = dynamic(() => import('@/components/home/LoginModal'), {
+  ssr: false,
+  loading: () => null,
+});
 
 const Header = () => {
   const router = useRouter();
@@ -76,7 +81,9 @@ const containerStyle = css({
   justifyContent: 'space-between',
   width: '100%',
   height: '72px',
+  backgroundColor: '#000',
   userSelect: 'none',
+  zIndex: 100,
 });
 
 const lefSideContainerStyle = css({

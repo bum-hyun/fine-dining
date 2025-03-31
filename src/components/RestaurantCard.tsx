@@ -4,14 +4,26 @@ import { useState } from 'react';
 import { css } from 'styled-system/css';
 import { ellipsis } from 'styled-system/patterns';
 
+import Button from '@/components/Button/Button';
 import RestaurantTags from '@/components/RestaurantTags';
+import { ROUTE_PATHS } from '@/constants/pathname';
+import { usePageRouter } from '@/hooks/usePageRouter';
 
 interface IRestaurantCardProps {
   item: IRestaurant;
 }
 
 const RestaurantCard = ({ item }: IRestaurantCardProps) => {
+  const router = usePageRouter();
+
   const [isHover, setIsHover] = useState(false);
+
+  const handleGoToRestaurantReview = (restaurantId: number) => {
+    router.push({
+      pathname: ROUTE_PATHS.RESTAURANT.REVIEW,
+      query: { restaurantId },
+    });
+  };
 
   return (
     <article className={containerStyle}>
@@ -19,16 +31,19 @@ const RestaurantCard = ({ item }: IRestaurantCardProps) => {
         {isHover && (
           <div className={imageWrapOverlayStyle}>
             <div className={buttonWrapStyle}>
-              <button className={buttonStyle}>
+              <Button className={goToReservationButtonStyle}>
                 <Link href={item.reservation_url} target={'_blank'}>
                   예약 페이지
                 </Link>
-              </button>
-              <button className={buttonStyle}>수정 제안</button>
+              </Button>
+              <Button className={seeReviewButtonStyle} onClick={() => handleGoToRestaurantReview(item.id!)}>
+                후기 보기
+              </Button>
+              <Button className={writeReviewButtonStyle}>후기 작성</Button>
             </div>
           </div>
         )}
-        {item.thumbnail && <Image className={imageStyle} src={item.thumbnail} alt={'image'} width={500} height={500} />}
+        {item.thumbnail && <Image className={imageStyle} src={item.thumbnail} alt={'image'} width={300} height={315} priority />}
       </div>
       <div className={infoWrapStyle}>
         <RestaurantTags tags={item.tags} />
@@ -98,11 +113,20 @@ const buttonWrapStyle = css({
   gap: '16px',
 });
 
-const buttonStyle = css({
-  padding: '8px 16px',
-  fontSize: '16px',
-  fontWeight: '600',
-  color: '#ffffff',
-  backgroundColor: '#737373',
-  borderRadius: '4px',
+const goToReservationButtonStyle = css({
+  backgroundColor: 'green.400',
+
+  _hover: {
+    backgroundColor: 'green.500',
+  },
 });
+
+const seeReviewButtonStyle = css({
+  backgroundColor: 'blue.400',
+
+  _hover: {
+    backgroundColor: 'blue.500',
+  },
+});
+
+const writeReviewButtonStyle = css({});

@@ -35,7 +35,7 @@ const LoginModal = ({ visible, handleCloseModal }: ILoginModalProps) => {
             <div className={doLoginTextStlye}>로그인 하기</div>
             <Button className={buttonStyle} onClick={signInWithKakao}>
               <div className={kakaoLoginStyle}>
-                <Image src={'small_kakao.svg'} alt={'카카오 아이콘'} width={18} height={18} />
+                <Image src={'/small_kakao.svg'} alt={'카카오 아이콘'} width={18} height={18} />
                 <span>카카오 로그인</span>
               </div>
             </Button>

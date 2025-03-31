@@ -1,12 +1,7 @@
 'use client';
 
-import DOMPurify from 'dompurify';
-import parse from 'html-react-parser';
-import Image from 'next/image';
 import { css } from 'styled-system/css';
 import { ellipsis } from 'styled-system/patterns';
-
-import { useGetRestaurant } from '@/services/restaurant';
 
 interface IRestaurantProps {
   initialData: any;
@@ -15,35 +10,7 @@ interface IRestaurantProps {
 const Restaurant = ({ initialData }: IRestaurantProps) => {
   console.log(initialData.data);
 
-  const sanitizedHTML = DOMPurify.sanitize(JSON.parse(initialData.data.content).content);
-
-  return (
-    <main className={article}>
-      <div className={titleArea}>
-        <h2 className={title}>아담한 복층도 괜찮아! 테라스 감성이 매력적인 아이보리 신혼집</h2>
-      </div>
-      <div className={profileContainer}>
-        <button className={profileArea}>
-          <Image className={profileImage} width={60} height={60} src={'https://vip.teepee.kr/2024/11/18/14/19/43/e399c590-b422-4672-a753-f45b30825382.png'} alt={'hh'} />
-          <div className={profileWrap}>
-            <span className={writerName}>dadsadjasdjwqeqeqeqdadsadjasdjwqeqeqeqdadsadjasdjwqeqeqeqdadsadjasdjwqeqeqeqdadsadjasdjwqeqeqeqdadsadjasdjwqeqeqeqdadsadjasdjwqeqeqeq</span>
-            <span className={writerNickname}>dadsadjasdjwqeqeqeqdadsadjasdjwqeqeqeqdadsadjasdjwqeqeqeqdadsadjasdjwqeqeqeqdadsadjasdjwqeqeqeqdadsadjasdjwqeqeqeqdadsadjasdjwqeqeqeq</span>
-          </div>
-        </button>
-      </div>
-      <div className={content}>{parse(sanitizedHTML)}</div>
-      <div className={commentArea}>
-        <h5>
-          댓글 <span className={commentCount}>22</span>
-        </h5>
-        <div className={commentInputArea}>
-          <div className={commentInputWrap}>
-            <input placeholder={'착한 댓글 부탁드립니다.'} className={commentInput} />
-          </div>
-        </div>
-      </div>
-    </main>
-  );
+  return <main className={article}></main>;
 };
 
 export default Restaurant;

@@ -10,7 +10,7 @@ export const useGetRestaurants = () =>
 
 export const useGetRestaurant = (id: number) =>
   useQuery<IRestaurant>({
-    queryKey: ['restaurant'],
+    queryKey: ['restaurant', id],
     queryFn: () => getRestaurant(id),
   });
 

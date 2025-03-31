@@ -1,25 +1,17 @@
+import withBundleAnalyzer from '@next/bundle-analyzer';
 import type { NextConfig } from 'next';
+
+const wrap = withBundleAnalyzer({
+  enabled: true,
+  openAnalyzer: true,
+});
 
 const nextConfig: NextConfig = {
   reactStrictMode: false,
   images: {
+    deviceSizes: [480, 768, 1024, 1440],
+    imageSizes: [480, 768, 1024, 1440],
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'www.restaurant-mingles.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'abacrestaurant.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'www.martinberasategui.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'akelarre.net',
-      },
       {
         protocol: 'https',
         hostname: '*.supabase.co',
@@ -28,4 +20,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default wrap(nextConfig);

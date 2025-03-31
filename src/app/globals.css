@@ -38,3 +38,7 @@ a, button:enabled {
   cursor: pointer;
   touch-action: manipulation;
 }
+
+.ce-toolbar__content,.ce-block__content {
+  max-width: 100%;
+}

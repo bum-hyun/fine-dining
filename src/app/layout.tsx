@@ -20,6 +20,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <html lang="ko">
+      <head>
+        <link rel="preconnect" href={`${process.env.NEXT_PUBLIC_SUPABASE_URL!}`} />
+        <link rel="dns-prefetch" href={`${process.env.NEXT_PUBLIC_SUPABASE_URL!}`} />
+      </head>
       <Providers>
         <body className={css({ display: 'flex', flexDirection: 'column', height: '100vh' })}>
           <Header />
