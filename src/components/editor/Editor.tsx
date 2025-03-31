@@ -8,6 +8,7 @@ import Quote from '@editorjs/quote';
 import { useEffect } from 'react';
 
 import SupabaseImageTool from '@/utils/editor/SupabaseImageTool';
+import TextBackgroundColor from '@/utils/editor/TextBackgroundColor';
 import TextColor from '@/utils/editor/TextColor';
 
 interface IEditorProps {}
@@ -46,12 +47,12 @@ const Editor = ({}: IEditorProps) => {
             colorCollections: ['#ffffff', '#000000', '#16b06d', '#00c6be', '#2e84b6', '#959595', '#f4c016', '#f6655b', '#ec4c69', '#5c5cb2'],
           },
         },
-        // backgroundColor: {
-        //   class: TextBackgroundColor,
-        //   config: {
-        //     colorCollections: ['#ffffff', '#000000', '#16b06d', '#00c6be', '#2e84b6', '#959595', '#f4c016', '#f6655b', '#ec4c69', '#5c5cb2'],
-        //   },
-        // },
+        backgroundColor: {
+          class: TextBackgroundColor,
+          config: {
+            colorCollections: ['#ffffff', '#000000', '#16b06d', '#00c6be', '#2e84b6', '#959595', '#f4c016', '#f6655b', '#ec4c69', '#5c5cb2'],
+          },
+        },
       },
 
       onReady: () => {
