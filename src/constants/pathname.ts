@@ -14,7 +14,12 @@ export const ROUTE_PATHS = {
   RESTAURANT: {
     ROOT: `/${ROUTE_KEYS.RESTAURANT}`,
     DETAIL: `/${ROUTE_KEYS.RESTAURANT}/[restaurantId]`,
-    REVIEW: `/${ROUTE_KEYS.RESTAURANT}/review/[restaurantId]`,
-    EDIT: `/${ROUTE_KEYS.RESTAURANT}/review/edit`,
+
+    REVIEW: {
+      LIST: `/${ROUTE_KEYS.RESTAURANT}/[restaurantId]/review`,
+      NEW: `/${ROUTE_KEYS.RESTAURANT}/[restaurantId]/review/new`,
+      DETAIL: `/${ROUTE_KEYS.RESTAURANT}/[restaurantId]/review/[reviewId]`,
+      EDIT: `/${ROUTE_KEYS.RESTAURANT}/[restaurantId]/review/[reviewId]/edit`,
+    },
   },
 };

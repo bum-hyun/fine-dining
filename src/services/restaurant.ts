@@ -17,13 +17,13 @@ export const useGetRestaurant = (id: number) =>
 export const usePostRestaurant = () =>
   useMutation({
     mutationKey: ['restaurants'],
-    mutationFn: (payload: IRestaurant) => postRestaurant(payload),
+    mutationFn: (payload: IPostRestaurant) => postRestaurant(payload),
   });
 
 export const usePutRestaurant = () =>
   useMutation({
     mutationKey: ['restaurants'],
-    mutationFn: (payload: IRestaurant) => putRestaurant(payload),
+    mutationFn: (payload: IPutRestaurant) => putRestaurant(payload),
   });
 
 export const useDeleteRestaurant = () =>

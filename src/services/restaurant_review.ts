@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { getRestaurantReview, postRestaurantReview, putRestaurantReview } from '@/services/supabase_api';
+import { getRestaurantNames, getRestaurantReview, postRestaurantReview, putRestaurantReview } from '@/services/supabase_api';
 
 export const useGetRestaurantReview = (id: number) =>
   useQuery<IRestaurantReview>({
@@ -17,5 +17,11 @@ export const usePostRestaurantReview = () =>
 export const usePutRestaurantReview = () =>
   useMutation({
     mutationKey: ['restaurant_review'],
-    mutationFn: (payload: IPostRestaurantReview) => putRestaurantReview(payload),
+    mutationFn: (payload: IPutRestaurantReview) => putRestaurantReview(payload),
+  });
+
+export const useGetRestaurantNames = () =>
+  useQuery({
+    queryKey: ['restaurant_names'],
+    queryFn: getRestaurantNames,
   });

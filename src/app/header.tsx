@@ -24,13 +24,13 @@ const Header = () => {
   const params = useParams();
 
   const { isLoggedIn, user, setUser } = useUserStore();
-  const { editor } = useEditorStore();
+  const { editor, reviewTitle } = useEditorStore();
 
   const [visible, setVisible] = useState(false);
 
-  const { mutateAsync } = usePostRestaurantReview();
+  const { mutateAsync: postRestaurantReview } = usePostRestaurantReview();
 
-  const isEditPostPage = pathname === ROUTE_PATHS.RESTAURANT.EDIT;
+  const isEditPostPage = true;
 
   const getUser = async () => {
     const {
@@ -70,15 +70,15 @@ const Header = () => {
     const payload: IPostRestaurantReview = {
       editor_object: data,
       editor_html: htmlBlocks,
-      restaurant_id: Number(params.restaurantId),
-      title: '',
+      restaurant_id: 1,
+      title: reviewTitle,
       user_id: user!.id,
     };
 
     console.log(payload);
 
-    return;
-    await mutateAsync(payload);
+    const result = await postRestaurantReview(payload);
+    console.log(result);
   };
 
   useEffect(() => {

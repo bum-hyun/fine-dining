@@ -4,19 +4,19 @@ import { immer } from 'zustand/middleware/immer';
 
 type State = {
   editor: EditorJS | null;
-  editorData: any;
+  reviewTitle: string;
 };
 
 type Actions = {
   setEditor: (editor: EditorJS | null) => void;
-  setEditorData: (editorData: any) => void;
+  setReviewTitle: (reviewTitle: string) => void;
 };
 
 export const useEditorStore = create<State & Actions>()(
   immer((set) => ({
     editor: null,
-    editorData: null,
+    reviewTitle: '',
     setEditor: (editor: EditorJS | null) => set({ editor }),
-    setEditorData: (editorData: any) => set({ editorData }),
+    setReviewTitle: (reviewTitle: string) => set({ reviewTitle }),
   }))
 );

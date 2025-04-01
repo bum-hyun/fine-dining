@@ -4,7 +4,7 @@ import supabase from '@/utils/supabase/client';
 const database = DATABASE_NAMES.RESTAURANTS;
 
 export const getRestaurants = async (): Promise<IRestaurant[]> => {
-  const { data, error } = await supabase.from(database).select('*').range(0, 10);
+  const { data, error } = await supabase.from(database).select('*').eq('status', 'active').range(0, 10);
 
   if (error) {
     throw new Error(`GET Error: ${error.message}`);
@@ -23,7 +23,7 @@ export const getRestaurant = async (id: number): Promise<IRestaurant> => {
   return data;
 };
 
-export const postRestaurant = async (payload: IRestaurant): Promise<IRestaurant> => {
+export const postRestaurant = async (payload: IPostRestaurant): Promise<IRestaurant> => {
   const { data, error } = await supabase.from(database).insert(payload).select();
 
   if (error) {
@@ -33,7 +33,7 @@ export const postRestaurant = async (payload: IRestaurant): Promise<IRestaurant>
   return data[0];
 };
 
-export const putRestaurant = async (payload: Partial<IRestaurant>) => {
+export const putRestaurant = async (payload: IPutRestaurant) => {
   const { data, error } = await supabase.from(database).update(payload).eq('id', payload.id).select();
 
   if (error) {
@@ -53,6 +53,16 @@ export const deleteRestaurant = async (id: number) => {
   return data;
 };
 
+export const getRestaurantNames = async (): Promise<Pick<IRestaurant, 'id' | 'name'>[]> => {
+  const { data, error } = await supabase.from(database).select('id, name, status').eq('status', 'active').order('name', { ascending: true });
+
+  if (error) {
+    throw new Error(`GET Error: ${error.message}`);
+  }
+
+  return data;
+};
+
 export const getRestaurantReview = async (id: number): Promise<IRestaurantReview> => {
   const { data, error } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select('*').eq('id', id).single();
 
@@ -65,7 +75,7 @@ export const getRestaurantReview = async (id: number): Promise<IRestaurantReview
 
 export const postRestaurantReview = async (payload: IPostRestaurantReview): Promise<IRestaurant> => {
   const { data, error } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).insert(payload).select();
-
+  console.log(data);
   if (error) {
     throw new Error(`POST Error: ${error.message}`);
   }
@@ -73,7 +83,7 @@ export const postRestaurantReview = async (payload: IPostRestaurantReview): Prom
   return data[0];
 };
 
-export const putRestaurantReview = async (payload: Partial<IPostRestaurantReview>) => {
+export const putRestaurantReview = async (payload: IPutRestaurantReview) => {
   const { data, error } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).update(payload).eq('id', payload.id).select();
 
   if (error) {

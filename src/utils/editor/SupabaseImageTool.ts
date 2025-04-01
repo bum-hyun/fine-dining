@@ -26,8 +26,9 @@ export default class SupabaseImageTool {
   render() {
     this.wrapper.innerHTML = '';
     this.wrapper.tabIndex = 0;
+    this.wrapper.style.margin = '8px 0';
 
-    // 이미지가 있으면 보여주기
+    // 이미지가 있으면 바로 렌더
     if (this.data.url) {
       const img = document.createElement('img');
       img.src = this.data.url;
@@ -35,16 +36,16 @@ export default class SupabaseImageTool {
       img.style.borderRadius = '8px';
       this.wrapper.appendChild(img);
     } else {
-      // 👉 이미지 없으면 input 트리거
+      // 이미지 없으면 자동 업로드 트리거
       if (this.isInitialRender) {
         this.isInitialRender = false;
-
         setTimeout(() => this.triggerFileSelect(), 50);
       }
 
-      this.wrapper.innerHTML = '<div style="color:#999">이미지 업로드 중입니다...</div>';
+      // 업로드 중 메시지는 없이 빈 상태 유지
     }
 
+    // 포커스 / 키보드 / 클릭 이벤트
     this.wrapper.addEventListener('keydown', (e) => {
       if (e.key === 'Backspace') {
         const index = this.api.blocks.getCurrentBlockIndex();
@@ -52,7 +53,6 @@ export default class SupabaseImageTool {
       }
     });
 
-    // 선택 시 포커스 주기
     this.wrapper.addEventListener('click', () => {
       this.wrapper.focus();
     });
@@ -83,28 +83,34 @@ export default class SupabaseImageTool {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
+    input.multiple = true;
 
     input.addEventListener('change', async () => {
-      const file = input.files?.[0];
-      if (!file) return;
+      const files = Array.from(input.files ?? []).reverse();
 
-      const filePath = `files/${Date.now()}_${file.name}`;
-      const { error } = await browserClient.storage.from('files').upload(filePath, file);
-      if (error) {
-        console.error('Upload error:', error);
-        return;
+      const currentIndex = this.api.blocks.getCurrentBlockIndex();
+      this.api.blocks.delete(currentIndex);
+
+      // ✅ 순서 보장: 앞에서부터 차례대로 업로드 및 삽입
+      for (const file of files) {
+        const filePath = `files/${Date.now()}_${file.name}`;
+        const { error } = await browserClient.storage.from('files').upload(filePath, file);
+
+        if (error) {
+          console.error('Upload error:', error);
+          continue;
+        }
+
+        const { publicUrl } = browserClient.storage.from('files').getPublicUrl(filePath).data;
+
+        // ✅ 모든 이미지를 blocks.insert 로 삽입 (첫 번째 포함)
+        await new Promise((resolve) => {
+          setTimeout(() => {
+            this.api.blocks.insert('image', { url: publicUrl }, undefined, undefined, false);
+            resolve(true);
+          }, 0);
+        });
       }
-
-      const { publicUrl } = browserClient.storage.from('files').getPublicUrl(filePath).data;
-
-      // 이미지 저장 & 다시 렌더
-      this.data.url = publicUrl;
-      this.wrapper.innerHTML = '';
-      const img = document.createElement('img');
-      img.src = publicUrl;
-      img.style.maxWidth = '100%';
-      img.style.borderRadius = '8px';
-      this.wrapper.appendChild(img);
     });
 
     input.click();
