@@ -61,7 +61,9 @@ interface IRestaurantReview {
   };
   updated_at: string;
   deleted_at: string;
-  user: Partial<IUser>;
+  files: string[];
+  text: string;
+  writer: IRestaurantReviewWriter;
 }
 
 interface IPostRestaurantReview {
@@ -70,8 +72,22 @@ interface IPostRestaurantReview {
   editor_html: string;
   editor_object: OutputData;
   user_id: string;
+  files: string[];
+  text: string;
 }
 
 interface IPutRestaurantReview extends IPostRestaurantReview {
   id: number;
+}
+
+interface IRestaurantReviewWriter {
+  id: string;
+  email: string;
+  nickname: string;
+}
+
+interface IRestaurantName {
+  id: number;
+  name: string;
+  status: string;
 }

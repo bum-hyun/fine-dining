@@ -1,18 +1,20 @@
-import ky from 'ky';
-import { Suspense } from 'react';
+import { css } from 'styled-system/css';
 
-import Restaurant from '@/app/restaurant/[restaurantId]/Restaurant';
+import { DATABASE_NAMES } from '@/constants/database';
+import serverClient from '@/utils/supabase/server';
 
-interface IPageProps {}
+const Page = async ({ params }: { params: Promise<{ restaurantId: string }> }) => {
+  const { restaurantId } = await params;
+  const supabase = await serverClient();
 
-const Page = async ({}: IPageProps) => {
-  const data = await ky.get('https://alpha-guardian-api.teepee.kr/v2/community/172').json();
+  const { data: post } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select('*').eq('id', restaurantId).single();
 
-  return (
-    <Suspense fallback={<div>...loading</div>}>
-      <Restaurant initialData={data} />
-    </Suspense>
-  );
+  return <div className={containerStyle}></div>;
 };
 
 export default Page;
+
+const containerStyle = css({
+  maxWidth: '786px',
+  margin: '0 auto',
+});

@@ -1,4 +1,4 @@
-import { DATABASE_NAMES } from '@/constants/database';
+import { DATABASE_NAMES, RESTAURANT_NAMES, RESTAURANT_REVIEW_WITH_WRITER_SELECT } from '@/constants/database';
 import supabase from '@/utils/supabase/client';
 
 const database = DATABASE_NAMES.RESTAURANTS;
@@ -54,7 +54,7 @@ export const deleteRestaurant = async (id: number) => {
 };
 
 export const getRestaurantNames = async (): Promise<Pick<IRestaurant, 'id' | 'name'>[]> => {
-  const { data, error } = await supabase.from(database).select('id, name, status').eq('status', 'active').order('name', { ascending: true });
+  const { data, error } = await supabase.from(database).select(RESTAURANT_NAMES).eq('status', 'active').order('name', { ascending: true });
 
   if (error) {
     throw new Error(`GET Error: ${error.message}`);
@@ -64,7 +64,7 @@ export const getRestaurantNames = async (): Promise<Pick<IRestaurant, 'id' | 'na
 };
 
 export const getRestaurantReview = async (id: number): Promise<IRestaurantReview> => {
-  const { data, error } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select('*').eq('id', id).single();
+  const { data, error } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select(RESTAURANT_REVIEW_WITH_WRITER_SELECT).eq('id', id).single();
 
   if (error) {
     throw new Error(`GET Error: ${error.message}`);

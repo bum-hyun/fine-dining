@@ -1,15 +1,12 @@
 'use client';
 
-import EditorJSHTML from 'editorjs-html';
 import dynamic from 'next/dynamic';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { css } from 'styled-system/css';
 
 import Button from '@/components/Button/Button';
 import { ROUTE_PATHS } from '@/constants/pathname';
-import { usePostRestaurantReview } from '@/services/restaurant_review';
-import { useEditorStore } from '@/stores/editorStore';
 import { useUserStore } from '@/stores/userStore';
 import browserClient from '@/utils/supabase/client';
 
@@ -20,17 +17,10 @@ const LoginModal = dynamic(() => import('@/components/home/LoginModal'), {
 
 const Header = () => {
   const router = useRouter();
-  const pathname = usePathname();
-  const params = useParams();
 
-  const { isLoggedIn, user, setUser } = useUserStore();
-  const { editor, reviewTitle } = useEditorStore();
+  const { isLoggedIn, setUser } = useUserStore();
 
   const [visible, setVisible] = useState(false);
-
-  const { mutateAsync: postRestaurantReview } = usePostRestaurantReview();
-
-  const isEditPostPage = true;
 
   const getUser = async () => {
     const {
@@ -59,28 +49,6 @@ const Header = () => {
     if (!error) setUser(null);
   };
 
-  console.log(params);
-  const handleClickEdit = async () => {
-    const data = await editor!.save();
-    console.log(data);
-    const edjsParser = EditorJSHTML();
-    const htmlBlocks = edjsParser.parse(data);
-    console.log('HTML 결과:', htmlBlocks);
-
-    const payload: IPostRestaurantReview = {
-      editor_object: data,
-      editor_html: htmlBlocks,
-      restaurant_id: 1,
-      title: reviewTitle,
-      user_id: user!.id,
-    };
-
-    console.log(payload);
-
-    const result = await postRestaurantReview(payload);
-    console.log(result);
-  };
-
   useEffect(() => {
     getUser();
   }, []);
@@ -94,13 +62,8 @@ const Header = () => {
           </span>
         </div>
         <div className={rightSideContainerStyle}>
-          {isEditPostPage && <Button onClick={handleClickEdit}>등록</Button>}
-          {!isEditPostPage && (
-            <>
-              {!isLoggedIn && <Button onClick={handleClickLogin}>로그인</Button>}
-              {isLoggedIn && <Button onClick={handleClickLogout}>로그아웃</Button>}
-            </>
-          )}
+          {!isLoggedIn && <Button onClick={handleClickLogin}>로그인</Button>}
+          {isLoggedIn && <Button onClick={handleClickLogout}>로그아웃</Button>}
         </div>
       </div>
       <div className={emptyHeightStyle} />
