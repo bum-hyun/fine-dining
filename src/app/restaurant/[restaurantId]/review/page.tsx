@@ -101,11 +101,12 @@ const imageStyle = css({
   objectFit: 'cover',
 });
 
-const restaurantCardTitleStyle = css({
+const restaurantCardTitleStyle = ellipsis({
   marginBottom: '4px',
   fontSize: '16px',
-  fontWeight: '500',
+  fontWeight: '600',
   color: '#191a20',
+  lines: 1,
 });
 
 const restaurantCardDateStyle = css({
@@ -117,7 +118,7 @@ const restaurantCardDateStyle = css({
 const restaurantCardTextStyle = ellipsis({
   fontSize: '16px',
   color: '#191a20',
-  lines: 5,
+  lines: 6,
 });
 
 const emptyBoxStyle = css({

@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { css } from 'styled-system/css';
 
+import EditReviewButton from '@/components/restaurant_review/EditReviewButton';
 import { DATABASE_NAMES, RESTAURANT_REVIEW_WITH_WRITER_SELECT } from '@/constants/database';
 import serverClient from '@/utils/supabase/server';
 
@@ -17,6 +18,7 @@ const Page = async ({ params }: { params: Promise<{ reviewId: string }> }) => {
       <div className={writerAndDateContainerStyle}>
         <div className={writerStyle}>{post?.writer.nickname}</div>
         <div className={dateStyle}>{dayjs(post?.created_at).format('YYYY. MM. DD. HH:mm')}</div>
+        <EditReviewButton post={post} />
       </div>
       <hr className={dividerStyle} />
       <article className={articleStyle}>{post?.editor_html && <div dangerouslySetInnerHTML={{ __html: post.editor_html.replace(/<p>\s*<\/p>/g, '<p>&nbsp;</p>') }} />}</article>
@@ -40,6 +42,7 @@ const titleStyle = css({
 
 const writerAndDateContainerStyle = css({
   display: 'flex',
+  alignItems: 'center',
   gap: '8px',
 });
 

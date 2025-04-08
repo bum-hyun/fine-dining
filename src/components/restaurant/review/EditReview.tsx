@@ -5,8 +5,10 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Button from 'src/components/Button/Button';
 import { css } from 'styled-system/css';
 
-import AddRestaurantModal from '@/components/review/AddRestaurantModal';
+import AddRestaurantModal from '@/components/restaurant_review/AddRestaurantModal';
 import Select from '@/components/Select';
+import { ROUTE_PATHS } from '@/constants/pathname';
+import { usePageRouter } from '@/hooks/usePageRouter';
 import { useGetRestaurantNames, usePostRestaurantReview, usePutRestaurantReview } from '@/services/restaurant_review';
 import { useEditorStore } from '@/stores/editorStore';
 import { useUserStore } from '@/stores/userStore';
@@ -21,6 +23,7 @@ interface IEditReviewProps {
 
 const EditReview = ({ reviewId }: IEditReviewProps) => {
   const params = useParams();
+  const router = usePageRouter();
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -82,6 +85,11 @@ const EditReview = ({ reviewId }: IEditReviewProps) => {
     } else {
       await postRestaurantReview(payload);
     }
+
+    router.push({
+      pathname: ROUTE_PATHS.RESTAURANT.REVIEW.LIST,
+      query: { restaurantId },
+    });
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
