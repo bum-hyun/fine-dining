@@ -5,7 +5,7 @@ import { css } from 'styled-system/css';
 
 import RestaurantCard from '@/components/RestaurantCard';
 import { useIntersect } from '@/hooks/useIntersect';
-import { useGetRestaurants } from '@/services/restaurant';
+import { useGetRestaurants } from '@/services/restaurant/restaurant_queries';
 
 const RestaurantList = () => {
   const [params, setParams] = useState<IGetRestaurantsParams>({ page: 0, limit: 10 });

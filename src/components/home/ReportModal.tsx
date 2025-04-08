@@ -1,26 +1,30 @@
 import { useEffect, useState } from 'react';
-import Button from 'src/components/Button/Button';
 import { css } from 'styled-system/css';
 
+import { Button } from '@/components/Button';
 import Modal from '@/components/Overlay/Modal';
-import { usePostRestaurant } from '@/services/restaurant/restaurant_queries';
+import { usePostReport } from '@/services/reposrt/report_queries';
+import { useUserStore } from '@/stores/userStore';
 
 interface IAddRestaurantModalProps {
   visible: boolean;
   handleCloseModal: () => void;
-  handleCompleteAddRestaurant: (id: number) => void;
 }
 
-const AddRestaurantModal = ({ visible, handleCloseModal, handleCompleteAddRestaurant }: IAddRestaurantModalProps) => {
+const ReportModal = ({ visible, handleCloseModal }: IAddRestaurantModalProps) => {
   const [isMounted, setIsMounted] = useState(false);
-  const [name, setName] = useState('');
+  const [content, setContent] = useState('');
 
-  const { mutateAsync: addRestaurant } = usePostRestaurant();
+  const { user } = useUserStore();
 
-  const handleAddRestaurant = async () => {
-    const data = await addRestaurant({ name });
-    handleCompleteAddRestaurant(data.id);
-    setName('');
+  const { mutateAsync: postReport } = usePostReport();
+
+  const handleReport = async () => {
+    await postReport({
+      user_id: user?.id,
+      content,
+    });
+    setContent('');
     handleCloseModal();
   };
 
@@ -33,13 +37,13 @@ const AddRestaurantModal = ({ visible, handleCloseModal, handleCompleteAddRestau
       {isMounted && (
         <Modal visible={visible} onClose={handleCloseModal}>
           <div className={modalStyle}>
-            <div className={addRestaurantTextStyle}>식당을 추가해주세요.</div>
+            <div className={addRestaurantTextStyle}>버그를 제보해주세요.</div>
             <div className={inputWrapStyle}>
-              <input className={inputStyle} value={name} onChange={(e) => setName(e.target.value)} />
-              <Button className={buttonStyle} onClick={handleAddRestaurant}>
-                추가
-              </Button>
+              <textarea className={inputStyle} value={content} onChange={(e) => setContent(e.target.value)} />
             </div>
+            <Button className={buttonStyle} onClick={handleReport}>
+              제보
+            </Button>
           </div>
         </Modal>
       )}
@@ -47,7 +51,7 @@ const AddRestaurantModal = ({ visible, handleCloseModal, handleCompleteAddRestau
   );
 };
 
-export default AddRestaurantModal;
+export default ReportModal;
 
 const modalStyle = css({
   padding: '1.25rem 2rem',
@@ -71,11 +75,17 @@ const addRestaurantTextStyle = css({
 const inputStyle = css({
   flex: '1',
   width: '100%',
+  minHeight: '100px',
   padding: '7px 8px',
   border: '1px solid #eee',
   borderRadius: '8px',
+  resize: 'none',
+  overflow: 'hidden',
+  lineHeight: '1.4',
+  outline: 'none',
 });
 
 const buttonStyle = css({
-  flex: 'none',
+  width: '100%',
+  marginTop: '16px',
 });

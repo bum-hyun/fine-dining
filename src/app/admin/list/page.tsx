@@ -6,7 +6,7 @@ import { useCallback } from 'react';
 import { css } from 'styled-system/css';
 
 import { ROUTE_PATHS } from '@/constants/pathname';
-import { useDeleteRestaurant, useGetRestaurants } from '@/services/restaurant';
+import { useDeleteRestaurant, useGetRestaurants } from '@/services/restaurant/restaurant_queries';
 
 const Page = () => {
   const router = useRouter();

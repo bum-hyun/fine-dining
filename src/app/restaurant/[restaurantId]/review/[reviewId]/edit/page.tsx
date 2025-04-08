@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import EditReview from '@/components/restaurant/review/EditReview';
-import { useGetRestaurantReview } from '@/services/restaurant_review';
+import { useGetRestaurantReview } from '@/services/restaurant_review/restaurant_review_queries';
 import { useEditorStore } from '@/stores/editorStore';
 
 const Page = () => {

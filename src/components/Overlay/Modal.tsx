@@ -17,6 +17,7 @@ const Modal = ({ visible = true, onClose, children }: IModalProps) => {
       setOpenModal(true);
       document.body.style.overflow = 'hidden';
     } else {
+      handleClose();
       document.body.style.overflow = '';
     }
     return () => {

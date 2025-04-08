@@ -1,7 +1,7 @@
 'use client';
 import { css } from 'styled-system/css';
 
-import { useGetRestaurants } from '@/services/restaurant';
+import { useGetRestaurants } from '@/services/restaurant/restaurant_queries';
 
 const Page = () => {
   const { data } = useGetRestaurants();

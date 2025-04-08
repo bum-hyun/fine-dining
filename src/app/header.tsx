@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { css } from 'styled-system/css';
 
 import Button from '@/components/Button/Button';
@@ -14,6 +14,10 @@ const LoginModal = dynamic(() => import('@/components/home/LoginModal'), {
   ssr: false,
   loading: () => null,
 });
+const ReportModal = dynamic(() => import('@/components/home/ReportModal'), {
+  ssr: false,
+  loading: () => null,
+});
 
 const Header = () => {
   const router = useRouter();
@@ -21,6 +25,7 @@ const Header = () => {
   const { isLoggedIn, setUser } = useUserStore();
 
   const [visible, setVisible] = useState(false);
+  const [visibleReportModal, setVisibleReportModal] = useState(false);
 
   const getUser = async () => {
     const {
@@ -40,13 +45,17 @@ const Header = () => {
     return user;
   };
 
-  const handleClickLogin = useCallback(() => {
+  const handleClickLogin = () => {
     setVisible(true);
-  }, []);
+  };
 
   const handleClickLogout = async () => {
     const { error } = await browserClient.auth.signOut();
     if (!error) setUser(null);
+  };
+
+  const handleReport = () => {
+    setVisibleReportModal(true);
   };
 
   useEffect(() => {
@@ -62,12 +71,14 @@ const Header = () => {
           </span>
         </div>
         <div className={rightSideContainerStyle}>
+          <Button onClick={handleReport}>버그제보</Button>
           {!isLoggedIn && <Button onClick={handleClickLogin}>로그인</Button>}
           {isLoggedIn && <Button onClick={handleClickLogout}>로그아웃</Button>}
         </div>
       </div>
       <div className={emptyHeightStyle} />
       <LoginModal visible={visible} handleCloseModal={() => setVisible(false)} />
+      <ReportModal visible={visibleReportModal} handleCloseModal={() => setVisibleReportModal(false)} />
     </>
   );
 };
@@ -111,4 +122,5 @@ const rightSideContainerStyle = css({
   display: 'flex',
   justifyContent: 'flex-end',
   padding: '16px',
+  gap: '16px',
 });

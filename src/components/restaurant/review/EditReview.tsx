@@ -9,7 +9,8 @@ import AddRestaurantModal from '@/components/restaurant_review/AddRestaurantModa
 import Select from '@/components/Select';
 import { ROUTE_PATHS } from '@/constants/pathname';
 import { usePageRouter } from '@/hooks/usePageRouter';
-import { useGetRestaurantNames, usePostRestaurantReview, usePutRestaurantReview } from '@/services/restaurant_review';
+import { useGetRestaurantNames } from '@/services/restaurant/restaurant_queries';
+import { usePostRestaurantReview, usePutRestaurantReview } from '@/services/restaurant_review/restaurant_review_queries';
 import { useEditorStore } from '@/stores/editorStore';
 import { useUserStore } from '@/stores/userStore';
 const Editor = dynamic(() => import('@/components/editor/Editor'), {

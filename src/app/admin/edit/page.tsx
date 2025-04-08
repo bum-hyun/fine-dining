@@ -6,7 +6,7 @@ import { useCallback, useState } from 'react';
 
 import EditRestaurantForm from '@/components/admin/edit/EditRestaurantForm';
 import { ROUTE_PATHS } from '@/constants/pathname';
-import { usePostRestaurant } from '@/services/restaurant';
+import { usePostRestaurant } from '@/services/restaurant/restaurant_queries';
 
 const Page = () => {
   const router = useRouter();
