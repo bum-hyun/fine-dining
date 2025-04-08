@@ -1,9 +1,28 @@
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import type { Metadata } from 'next';
 import { css } from 'styled-system/css';
 import { flex } from 'styled-system/patterns';
 
 import RestaurantList from '@/components/RestaurantList';
+import { SERVICE_KEY } from '@/constants/service';
+import { getRestaurants } from '@/services/restaurant/restaurant_api';
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: '다이닝 후기 공유',
+  description: '전 세계에 있는 레스토랑에 다녀온 후기를 남겨주세요!',
+};
+
+export default async function Home() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: [SERVICE_KEY.RESTAURANT.GET_RESTAURANTS, { page: 0, limit: 10 }],
+    queryFn: () => getRestaurants({ page: 0, limit: 10 }),
+    initialPageParam: 0,
+  });
+
+  const dehydratedState = dehydrate(queryClient);
+
   return (
     <div className={containerStyle}>
       <div className={contentsWrapStyle}>
@@ -11,7 +30,9 @@ export default function Home() {
           <h1 className={titleStyle}>전체</h1>
           <div className={descriptionStyle}>전 세계에 있는 레스토랑에 다녀온 후기를 남겨주세요!</div>
         </div>
-        <RestaurantList />
+        <HydrationBoundary state={dehydratedState}>
+          <RestaurantList />
+        </HydrationBoundary>
       </div>
     </div>
   );

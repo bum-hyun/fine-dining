@@ -1,15 +1,9 @@
 import './globals.css';
 
-import type { Metadata } from 'next';
 import { css } from 'styled-system/css';
 
 import Header from '@/app/header';
-import Providers from '@/app/provider';
-
-export const metadata: Metadata = {
-  title: '타이틀',
-  description: '설명',
-};
+import { ReactQueryProvider } from '@/app/provider';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -24,7 +18,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <link rel="preconnect" href={`${process.env.NEXT_PUBLIC_SUPABASE_URL!}`} />
         <link rel="dns-prefetch" href={`${process.env.NEXT_PUBLIC_SUPABASE_URL!}`} />
       </head>
-      <Providers>
+      <ReactQueryProvider>
         <body className={css({ display: 'flex', flexDirection: 'column', height: '100vh' })}>
           <Header />
           {children}
@@ -35,7 +29,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {/*  </InitializeWorker>*/}
         {/*)}*/}
         {/*{env !== 'development' && <body>{children}</body>}*/}
-      </Providers>
+      </ReactQueryProvider>
     </html>
   );
 }
