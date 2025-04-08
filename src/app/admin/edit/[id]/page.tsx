@@ -11,7 +11,7 @@ import { useGetRestaurant, usePutRestaurant } from '@/services/restaurant/restau
 const Page = () => {
   const router = useRouter();
   const params = useParams();
-  const id = params.id;
+  const id = Number(params.id as string);
   const queryClient = useQueryClient();
 
   const [payload, setPayload] = useState<IPostRestaurant>({
