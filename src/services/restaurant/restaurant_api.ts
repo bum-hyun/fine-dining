@@ -58,7 +58,7 @@ export const deleteRestaurant = async (id: number) => {
 };
 
 export const getRestaurantNames = async (): Promise<Pick<IRestaurant, 'id' | 'name'>[]> => {
-  const { data, error } = await supabase.from(database).select(RESTAURANT_NAMES).eq('status', 'active').order('name', { ascending: true });
+  const { data, error } = await supabase.from(database).select(RESTAURANT_NAMES).neq('status', 'rejected').order('name', { ascending: true });
 
   if (error) {
     throw new Error(`GET Error: ${error.message}`);

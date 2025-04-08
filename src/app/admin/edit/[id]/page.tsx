@@ -2,7 +2,7 @@
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import EditRestaurantForm from '@/components/admin/edit/EditRestaurantForm';
 import { ROUTE_PATHS } from '@/constants/pathname';
@@ -14,7 +14,7 @@ const Page = () => {
   const id = params.id;
   const queryClient = useQueryClient();
 
-  const [payload, setPayload] = useState<IRestaurant>({
+  const [payload, setPayload] = useState<IPostRestaurant>({
     name: '',
     address: '',
     email: '',
@@ -31,15 +31,11 @@ const Page = () => {
   const { data } = useGetRestaurant(Number(id));
   const { mutateAsync: putRestaurant } = usePutRestaurant();
 
-  const editRestaurant = useCallback(async () => {
-    try {
-      await putRestaurant(payload);
-      await queryClient.invalidateQueries({ queryKey: ['restaurants'] });
-      router.push(`${ROUTE_PATHS.ADMIN.LIST}`);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [payload]);
+  const editRestaurant = async () => {
+    await putRestaurant({ ...payload, id });
+    await queryClient.invalidateQueries({ queryKey: ['restaurants'] });
+    router.push(`${ROUTE_PATHS.ADMIN.LIST}`);
+  };
 
   useEffect(() => {
     if (!data) return;

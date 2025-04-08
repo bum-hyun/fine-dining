@@ -12,7 +12,7 @@ const Page = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const [payload, setPayload] = useState<IRestaurant>({
+  const [payload, setPayload] = useState<IPostRestaurant>({
     name: '',
     address: '',
     email: '',

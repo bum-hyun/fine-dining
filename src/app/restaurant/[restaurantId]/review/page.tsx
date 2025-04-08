@@ -16,7 +16,7 @@ const Page = async ({ params }: { params: Promise<{ restaurantId: string }> }) =
   const { data: restaurantData } = await supabase.from(DATABASE_NAMES.RESTAURANTS).select(RESTAURANT_NAMES).eq('id', restaurantId).single();
   const restaurantName: IRestaurantName | null = restaurantData;
 
-  const { data } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select('*').eq('restaurant_id', restaurantId);
+  const { data } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select('*').eq('restaurant_id', restaurantId).order('created_at', { ascending: true });
   const posts: IRestaurantReview[] | null = data;
 
   return (

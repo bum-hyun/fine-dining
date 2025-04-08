@@ -1,3 +1,5 @@
+type RestaurantStatus = 'active' | 'pending' | 'rejected';
+
 interface IRestaurant {
   id: number;
   name: string;
@@ -12,7 +14,7 @@ interface IRestaurant {
   dinner_price: number;
   thumbnail?: string;
   currency: string;
-  status: string;
+  status: RestaurantStatus;
 }
 
 interface IPostRestaurant {
@@ -26,9 +28,12 @@ interface IPostRestaurant {
   tags?: string[];
   launch_price?: number;
   dinner_price?: number;
+  currency: string;
+  thumbnail?: string;
+  status?: RestaurantStatus;
 }
 
-interface IPutRestaurant extends IEditRestaurant {
+interface IPutRestaurant extends IPostRestaurant {
   id: number;
 }
 

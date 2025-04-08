@@ -2,26 +2,39 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { css } from 'styled-system/css';
 
 import { ROUTE_PATHS } from '@/constants/pathname';
+import { useIntersect } from '@/hooks/useIntersect';
 import { useDeleteRestaurant, useGetRestaurants } from '@/services/restaurant/restaurant_queries';
 
 const Page = () => {
   const router = useRouter();
 
-  const { data, refetch } = useGetRestaurants();
+  const [params, setParams] = useState<IGetRestaurantsParams>({ page: 0, limit: 10 });
+
+  const { data, fetchNextPage, hasNextPage, refetch } = useGetRestaurants(params);
   const { mutateAsync: deleteRestaurant } = useDeleteRestaurant();
+
+  const onIntersect = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  const intersectRef = useIntersect(onIntersect, hasNextPage);
 
   const handleDeleteRestaurant = useCallback(async (id: number) => {
     await deleteRestaurant(id);
     await refetch();
   }, []);
 
+  const restaurants = data?.pages.flat() ?? [];
+
   return (
     <div className={listContainerStyle}>
-      {data?.map((item) => (
+      {restaurants.map((item) => (
         <div key={item.id} className={itemWrapStyle}>
           <div className={imageWrapStyle}>{item.thumbnail && <Image className={imageStyle} src={item.thumbnail} alt={'thumbnail'} width={100} height={150} />}</div>
           <div className={contentsWrapStyle}>
@@ -29,7 +42,7 @@ const Page = () => {
             <div className={contentsStyle}>{item.address}</div>
             <div className={contentsStyle}>{item.tel}</div>
             <div className={contentsStyle}>
-              <Link href={item.reservation_url}>예약 링크</Link>
+              <Link href={item.reservation_url || ''}>예약 링크</Link>
             </div>
           </div>
           <div className={buttonWrapStyle}>
@@ -42,6 +55,7 @@ const Page = () => {
           </div>
         </div>
       ))}
+      <div ref={intersectRef} style={{ height: 1 }} />
     </div>
   );
 };
@@ -53,8 +67,9 @@ const listContainerStyle = css({
   flexDirection: 'column',
   padding: '24px 16px',
   gap: '16px',
+  width: '100%',
   fontSize: '14px',
-  overflow: 'hidden',
+  overflow: 'auto',
   textOverflow: 'ellipsis',
 });
 

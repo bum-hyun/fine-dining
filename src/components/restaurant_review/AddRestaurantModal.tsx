@@ -18,7 +18,7 @@ const AddRestaurantModal = ({ visible, handleCloseModal, handleCompleteAddRestau
   const { mutateAsync: addRestaurant } = usePostRestaurant();
 
   const handleAddRestaurant = async () => {
-    const data = await addRestaurant({ name });
+    const data = await addRestaurant({ name, status: 'pending' });
     handleCompleteAddRestaurant(data.id);
     setName('');
     handleCloseModal();

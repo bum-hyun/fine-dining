@@ -8,15 +8,15 @@ import { flex } from 'styled-system/patterns';
 import supabase from '@/utils/supabase/client';
 
 interface IEditRestaurantFormProps {
-  payload: IRestaurant;
-  setPayload: Dispatch<SetStateAction<IRestaurant>>;
+  payload: IPostRestaurant | IPutRestaurant;
+  setPayload: Dispatch<SetStateAction<IPostRestaurant | IPutRestaurant>>;
   editRestaurant: () => void;
 }
 
 const EditRestaurantForm = ({ payload, setPayload, editRestaurant }: IEditRestaurantFormProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const INPUT_CONTENTS: { label: string; name: keyof IRestaurant; type?: string }[] = [
+  const INPUT_CONTENTS: { label: string; name: keyof IPostRestaurant; type?: string }[] = [
     { label: '이름', name: 'name' },
     { label: '주소', name: 'address' },
     { label: '전화번호', name: 'tel' },

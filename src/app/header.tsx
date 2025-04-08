@@ -71,7 +71,7 @@ const Header = () => {
           </span>
         </div>
         <div className={rightSideContainerStyle}>
-          <Button onClick={handleReport}>버그제보</Button>
+          <Button onClick={handleReport}>버그제보 및 개선점 제안</Button>
           {!isLoggedIn && <Button onClick={handleClickLogin}>로그인</Button>}
           {isLoggedIn && <Button onClick={handleClickLogout}>로그아웃</Button>}
         </div>

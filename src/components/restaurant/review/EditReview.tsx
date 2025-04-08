@@ -13,6 +13,7 @@ import { useGetRestaurantNames } from '@/services/restaurant/restaurant_queries'
 import { usePostRestaurantReview, usePutRestaurantReview } from '@/services/restaurant_review/restaurant_review_queries';
 import { useEditorStore } from '@/stores/editorStore';
 import { useUserStore } from '@/stores/userStore';
+
 const Editor = dynamic(() => import('@/components/editor/Editor'), {
   ssr: false,
   loading: () => null,

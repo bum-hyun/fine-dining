@@ -1,6 +1,16 @@
 import { DATABASE_NAMES, RESTAURANT_REVIEW_WITH_WRITER_SELECT } from '@/constants/database';
 import supabase from '@/utils/supabase/client';
 
+export const getRestaurantReviews = async (id: number): Promise<IRestaurantReview[]> => {
+  const { data, error } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select('*').eq('restaurant_id', id).order('created_at', { ascending: true });
+
+  if (error) {
+    throw new Error(`GET Error: ${error.message}`);
+  }
+
+  return data;
+};
+
 export const getRestaurantReview = async (id: number): Promise<IRestaurantReview> => {
   const { data, error } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select(RESTAURANT_REVIEW_WITH_WRITER_SELECT).eq('id', id).single();
 
