@@ -28,7 +28,7 @@ interface IPostRestaurant {
   tags?: string[];
   launch_price?: number;
   dinner_price?: number;
-  currency: string;
+  currency?: string;
   thumbnail?: string;
   status?: RestaurantStatus;
 }
