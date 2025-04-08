@@ -1,8 +1,5 @@
-import bcrypt from 'bcryptjs';
 import NextAuth, { AuthError } from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';
 import Kakao from 'next-auth/providers/kakao';
-import { z } from 'zod';
 
 import { authConfig } from '@/auth.config';
 

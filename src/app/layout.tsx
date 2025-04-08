@@ -10,8 +10,6 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
-  const env = process.env.NODE_ENV;
-
   return (
     <html lang="ko">
       <head>

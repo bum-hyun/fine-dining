@@ -52,23 +52,23 @@ const listContainerStyle = css({
   textOverflow: 'ellipsis',
 });
 
-const tableStyle = css({
-  flexGrow: 1,
-  display: 'grid',
-  height: '100%',
-  gridTemplateRows: 'repeat(6, 35px)',
-  gridTemplateColumns: '130px 120px 189px 250px 250px 250px 250px 162px 198px 189px 250px 250px 250px 144px 144px 250px 100px',
-  overflowX: 'auto',
-  overflowY: 'scroll',
-});
-
-const listStyle = css({
-  display: 'contents',
-  gridRowStart: 2,
-});
-
-const cellStyle = css({
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-});
+// const tableStyle = css({
+//   flexGrow: 1,
+//   display: 'grid',
+//   height: '100%',
+//   gridTemplateRows: 'repeat(6, 35px)',
+//   gridTemplateColumns: '130px 120px 189px 250px 250px 250px 250px 162px 198px 189px 250px 250px 250px 144px 144px 250px 100px',
+//   overflowX: 'auto',
+//   overflowY: 'scroll',
+// });
+//
+// const listStyle = css({
+//   display: 'contents',
+//   gridRowStart: 2,
+// });
+//
+// const cellStyle = css({
+//   whiteSpace: 'nowrap',
+//   overflow: 'hidden',
+//   textOverflow: 'ellipsis',
+// });

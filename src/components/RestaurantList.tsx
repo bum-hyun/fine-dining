@@ -8,7 +8,7 @@ import { useIntersect } from '@/hooks/useIntersect';
 import { useGetRestaurants } from '@/services/restaurant/restaurant_queries';
 
 const RestaurantList = () => {
-  const [params, setParams] = useState<IGetRestaurantsParams>({ page: 0, limit: 10 });
+  const [params] = useState<IGetRestaurantsParams>({ page: 0, limit: 10 });
 
   const { data, fetchNextPage, hasNextPage } = useGetRestaurants(params);
 
