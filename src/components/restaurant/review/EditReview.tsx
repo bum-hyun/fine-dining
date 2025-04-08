@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Button from 'src/components/Button/Button';
 import { css } from 'styled-system/css';
 
+import AddRestaurantModal from '@/components/review/AddRestaurantModal';
 import Select from '@/components/Select';
 import { useGetRestaurantNames, usePostRestaurantReview, usePutRestaurantReview } from '@/services/restaurant_review';
 import { useEditorStore } from '@/stores/editorStore';
@@ -21,12 +22,15 @@ interface IEditReviewProps {
 const EditReview = ({ reviewId }: IEditReviewProps) => {
   const params = useParams();
 
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
   const [restaurantId, setRestaurantId] = useState<string | number>(params.restaurantId as string);
+  const [visible, setVisible] = useState(false);
 
   const { user } = useUserStore();
   const { reviewTitle, setReviewTitle, editor } = useEditorStore();
 
-  const { data: restaurantNames } = useGetRestaurantNames();
+  const { data: restaurantNames, refetch } = useGetRestaurantNames();
   const { mutateAsync: postRestaurantReview } = usePostRestaurantReview();
   const { mutateAsync: putRestaurantReview } = usePutRestaurantReview();
 
@@ -66,7 +70,7 @@ const EditReview = ({ reviewId }: IEditReviewProps) => {
     const payload: IPostRestaurantReview = {
       editor_object: newData,
       editor_html: htmlBlocks,
-      restaurant_id: 1,
+      restaurant_id: Number(restaurantId),
       title: reviewTitle,
       user_id: user!.id,
       files,
@@ -87,7 +91,15 @@ const EditReview = ({ reviewId }: IEditReviewProps) => {
     setReviewTitle(el.value);
   };
 
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const handleAddRestaurantClick = () => {
+    setVisible(true);
+  };
+
+  const handleCompleteAddRestaurant = async (id: number) => {
+    await refetch();
+    setRestaurantId(id);
+    setVisible(false);
+  };
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -97,16 +109,27 @@ const EditReview = ({ reviewId }: IEditReviewProps) => {
   }, [reviewTitle]);
 
   return (
-    <div className={editorContainerStyle}>
-      <div className={topButtonContainerStyle}>
-        <Button onClick={handleClickEdit}>등록</Button>
+    <>
+      <div className={editorContainerStyle}>
+        <div className={topButtonContainerStyle}>
+          <Button onClick={handleClickEdit}>등록</Button>
+        </div>
+        <div className={titleContainerStyle}>
+          <textarea ref={textareaRef} className={titleInputStyle} rows={1} value={reviewTitle} onChange={handleChange} placeholder={'제목을 입력해주세요.'} />
+        </div>
+        <div className={selectContainerStyle}>
+          {restaurantNames && <Select value={Number(restaurantId)} options={options} onChange={(value) => setRestaurantId(value)} />}
+          <div className={noRestaurantTextWrapStyle}>
+            찾는 식당이 없나요?
+            <button className={noRestaurantTextStyle} onClick={handleAddRestaurantClick}>
+              식당을 추가해주세요.
+            </button>
+          </div>
+        </div>
+        <Editor />
       </div>
-      <div className={titleContainerStyle}>
-        <textarea ref={textareaRef} className={titleInputStyle} rows={1} value={reviewTitle} onChange={handleChange} placeholder={'제목을 입력해주세요.'} />
-      </div>
-      {restaurantNames && <Select value={Number(restaurantId)} options={options} onChange={(value) => setRestaurantId(value)} />}
-      <Editor />
-    </div>
+      <AddRestaurantModal visible={visible} handleCloseModal={() => setVisible(false)} handleCompleteAddRestaurant={handleCompleteAddRestaurant} />
+    </>
   );
 };
 
@@ -114,7 +137,7 @@ export default EditReview;
 
 const editorContainerStyle = css({
   position: 'relative',
-  maxWidth: '836px',
+  maxWidth: '960px',
   width: '100%',
   margin: '60px auto',
   padding: '0 64px',
@@ -140,4 +163,25 @@ const titleInputStyle = css({
   lineHeight: '1.4',
   padding: '8px 0',
   outline: 'none',
+});
+
+const selectContainerStyle = css({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '16px',
+  marginBottom: '16px',
+  paddingBottom: '16px',
+  borderBottom: '1px solid #ddd',
+});
+
+const noRestaurantTextWrapStyle = css({
+  display: 'flex',
+  gap: '8px',
+  fontSize: 14,
+  color: '#666',
+});
+
+const noRestaurantTextStyle = css({
+  color: '#0070f3',
+  textDecoration: 'underline',
 });

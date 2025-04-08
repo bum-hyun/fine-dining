@@ -1,11 +1,15 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery } from '@tanstack/react-query';
 
 import { deleteRestaurant, getRestaurant, getRestaurants, postRestaurant, putRestaurant } from '@/services/supabase_api';
 
-export const useGetRestaurants = () =>
-  useQuery<IRestaurant[]>({
-    queryKey: ['restaurants'],
-    queryFn: getRestaurants,
+export const useGetRestaurants = (params: IGetRestaurantsParams) =>
+  useInfiniteQuery({
+    queryKey: ['restaurants', params],
+    queryFn: ({ pageParam = 0 }) => getRestaurants({ ...params, page: pageParam }),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.length === (params.limit || 10) ? allPages.length : undefined;
+    },
+    initialPageParam: 0,
   });
 
 export const useGetRestaurant = (id: number) =>

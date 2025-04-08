@@ -38,11 +38,13 @@ const RestaurantCard = ({ item }: IRestaurantCardProps) => {
         {isHover && (
           <div className={imageWrapOverlayStyle}>
             <div className={buttonWrapStyle}>
-              <Button className={goToReservationButtonStyle}>
-                <Link href={item.reservation_url} target={'_blank'}>
-                  예약 페이지
-                </Link>
-              </Button>
+              {item.reservation_url && (
+                <Button className={goToReservationButtonStyle}>
+                  <Link href={item.reservation_url} target={'_blank'}>
+                    예약 페이지
+                  </Link>
+                </Button>
+              )}
               <Button className={seeReviewButtonStyle} onClick={() => handleGoToRestaurantReview(item.id!)}>
                 <Link href={`/restaurant/${item.id}/review`}>후기 보기</Link>
               </Button>

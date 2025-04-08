@@ -3,8 +3,12 @@ import supabase from '@/utils/supabase/client';
 
 const database = DATABASE_NAMES.RESTAURANTS;
 
-export const getRestaurants = async (): Promise<IRestaurant[]> => {
-  const { data, error } = await supabase.from(database).select('*').eq('status', 'active').range(0, 10);
+export const getRestaurants = async (params: IGetRestaurantsParams): Promise<IRestaurant[]> => {
+  const limit = params.limit || 10;
+  const from = params.page * limit;
+  const to = from + limit - 1;
+
+  const { data, error } = await supabase.from(database).select('*').eq('status', 'active').range(from, to);
 
   if (error) {
     throw new Error(`GET Error: ${error.message}`);

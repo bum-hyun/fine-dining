@@ -17,15 +17,15 @@ interface IRestaurant {
 
 interface IPostRestaurant {
   name: string;
-  address: string;
-  email: string;
-  description: string;
-  is_only_course: boolean;
-  tel: string;
-  reservation_url: string;
-  tags: string[];
-  launch_price: number;
-  dinner_price: number;
+  address?: string;
+  email?: string;
+  description?: string;
+  is_only_course?: boolean;
+  tel?: string;
+  reservation_url?: string;
+  tags?: string[];
+  launch_price?: number;
+  dinner_price?: number;
 }
 
 interface IPutRestaurant extends IEditRestaurant {
@@ -90,4 +90,11 @@ interface IRestaurantName {
   id: number;
   name: string;
   status: string;
+}
+
+interface IGetRestaurantsParams {
+  world?: string;
+  star?: number;
+  page: number;
+  limit?: number;
 }

@@ -1,14 +1,35 @@
 'use client';
 
+import { useState } from 'react';
 import { css } from 'styled-system/css';
 
 import RestaurantCard from '@/components/RestaurantCard';
+import { useIntersect } from '@/hooks/useIntersect';
 import { useGetRestaurants } from '@/services/restaurant';
 
 const RestaurantList = () => {
-  const { data } = useGetRestaurants();
+  const [params, setParams] = useState<IGetRestaurantsParams>({ page: 0, limit: 10 });
 
-  return <div className={containerStyle}>{data?.map((item, index) => <RestaurantCard key={index} item={item} />)}</div>;
+  const { data, fetchNextPage, hasNextPage } = useGetRestaurants(params);
+
+  const onIntersect = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  const intersectRef = useIntersect(onIntersect, hasNextPage);
+
+  const restaurants = data?.pages.flat() ?? [];
+
+  return (
+    <div className={containerStyle}>
+      {restaurants.map((item, index) => (
+        <RestaurantCard key={index} item={item} />
+      ))}
+      <div ref={intersectRef} style={{ height: 1 }} />
+    </div>
+  );
 };
 
 export default RestaurantList;
