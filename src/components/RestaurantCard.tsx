@@ -20,7 +20,14 @@ const RestaurantCard = ({ item }: IRestaurantCardProps) => {
 
   const handleGoToRestaurantReview = (restaurantId: number) => {
     router.push({
-      pathname: ROUTE_PATHS.RESTAURANT.REVIEW,
+      pathname: ROUTE_PATHS.RESTAURANT.REVIEW.LIST,
+      query: { restaurantId },
+    });
+  };
+
+  const handleGoToRestaurantReviewEdit = (restaurantId: number) => {
+    router.push({
+      pathname: ROUTE_PATHS.RESTAURANT.REVIEW.NEW,
       query: { restaurantId },
     });
   };
@@ -37,9 +44,11 @@ const RestaurantCard = ({ item }: IRestaurantCardProps) => {
                 </Link>
               </Button>
               <Button className={seeReviewButtonStyle} onClick={() => handleGoToRestaurantReview(item.id!)}>
-                후기 보기
+                <Link href={`/restaurant/${item.id}/review`}>후기 보기</Link>
               </Button>
-              <Button className={writeReviewButtonStyle}>후기 작성</Button>
+              <Button className={writeReviewButtonStyle} onClick={() => handleGoToRestaurantReviewEdit(item.id!)}>
+                <Link href={`/restaurant/${item.id}/review/new`}>후기 작성</Link>
+              </Button>
             </div>
           </div>
         )}

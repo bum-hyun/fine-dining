@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
+import { NotebookText } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { css } from 'styled-system/css';
-import { flex } from 'styled-system/patterns';
+import { ellipsis, flex } from 'styled-system/patterns';
 
 import { DATABASE_NAMES, RESTAURANT_NAMES } from '@/constants/database';
 import { isEmpty } from '@/utils/common';
@@ -24,16 +26,23 @@ const Page = async ({ params }: { params: Promise<{ restaurantId: string }> }) =
         <div className={descriptionStyle}>{`${restaurantName?.name}에 다녀온 후기를 남겨주세요!`}</div>
       </div>
       <div className={restaurantListWrapStyle}>
-        {posts?.map((post) => (
-          <div key={post.id} className={restaurantCardWrapStyle}>
-            <div className={imageWrapStyle}>{!isEmpty(post.files) && <Image className={imageStyle} src={post.files[0]} alt={'image'} width={300} height={315} priority />}</div>
-            <div>
-              <div className={restaurantCardTitleStyle}>{post.title}</div>
-              <div className={restaurantCardDateStyle}>{dayjs(post.created_at).format('YYYY. MM. DD')}</div>
-              <div className={restaurantCardTextStyle}>{post.text}</div>
-            </div>
+        {isEmpty(posts) && (
+          <div className={emptyBoxStyle}>
+            <NotebookText size={40} color={'#888'} />
+            <p className={emptyTextStyle}>{'아직 등록된 후기가 없습니다.\n첫 번째 후기를 남겨보세요!'}</p>
           </div>
-        ))}
+        )}
+        {!isEmpty(posts) &&
+          posts!.map((post) => (
+            <Link key={post.id} href={`/restaurant/${restaurantId}/review/${post.id}`} className={restaurantCardWrapStyle}>
+              <div className={imageWrapStyle}>{!isEmpty(post.files) && <Image className={imageStyle} src={post.files[0]} alt={'image'} width={300} height={315} priority />}</div>
+              <div>
+                <div className={restaurantCardTitleStyle}>{post.title}</div>
+                <div className={restaurantCardDateStyle}>{dayjs(post.created_at).format('YYYY. MM. DD')}</div>
+                <div className={restaurantCardTextStyle}>{post.text}</div>
+              </div>
+            </Link>
+          ))}
       </div>
     </div>
   );
@@ -67,6 +76,7 @@ const restaurantListWrapStyle = css({
   display: 'flex',
   flexDirection: 'column',
   gap: '16px',
+  marginTop: '32px',
 });
 
 const restaurantCardWrapStyle = css({
@@ -75,9 +85,10 @@ const restaurantCardWrapStyle = css({
 });
 
 const imageWrapStyle = css({
+  flex: 'none',
   position: 'relative',
   display: 'flex',
-  width: '180px',
+  width: '160px',
   height: '200px',
   backgroundColor: '#7c7c7c',
   borderRadius: '16px',
@@ -91,17 +102,35 @@ const imageStyle = css({
 });
 
 const restaurantCardTitleStyle = css({
+  marginBottom: '4px',
   fontSize: '16px',
   fontWeight: '500',
   color: '#191a20',
 });
 
 const restaurantCardDateStyle = css({
+  marginBottom: '4px',
   fontSize: '14px',
   color: '#666',
 });
 
-const restaurantCardTextStyle = css({
+const restaurantCardTextStyle = ellipsis({
   fontSize: '16px',
   color: '#191a20',
+  lines: 5,
+});
+
+const emptyBoxStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '12px',
+  padding: '40px 0',
+  color: '#888',
+});
+
+const emptyTextStyle = css({
+  fontSize: '24px',
+  textAlign: 'center',
+  whiteSpace: 'pre-wrap',
 });

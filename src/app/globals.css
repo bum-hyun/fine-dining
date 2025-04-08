@@ -42,3 +42,7 @@ a, button:enabled {
 .ce-toolbar__content,.ce-block__content {
   max-width: 100%;
 }
+
+.cdx-block {
+  padding: 0;
+}

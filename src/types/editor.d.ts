@@ -75,11 +75,11 @@ declare module '@editorjs/quote' {
   export default Quote;
 }
 
-declare module '@editorjs/quote' {
-  import { ToolConstructable } from '@editorjs/editorjs';
+declare module '@editorjs/paragraph' {
+  import { ToolConstructable } from '@editorjs/paragraph';
 
-  const Quote: ToolConstructable | undefined;
-  export default Quote;
+  const Paragraph: ToolConstructable | undefined;
+  export default Paragraph;
 }
 
 declare module 'editorjs-undo';

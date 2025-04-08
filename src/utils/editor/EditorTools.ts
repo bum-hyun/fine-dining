@@ -3,6 +3,7 @@ import Embed from '@editorjs/embed';
 import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import Marker from '@editorjs/marker';
+import Paragraph from '@editorjs/paragraph';
 import Quote from '@editorjs/quote';
 
 import SupabaseImageTool from '@/utils/editor/SupabaseImageTool';
@@ -10,6 +11,16 @@ import TextBackgroundColor from '@/utils/editor/TextBackgroundColor';
 import TextColor from '@/utils/editor/TextColor';
 
 const EditorTools = {
+  paragraph: {
+    class: Paragraph,
+    inlineToolbar: true,
+    config: {
+      preserveBlank: true,
+    },
+    validate() {
+      return true;
+    },
+  },
   heading: {
     class: Header,
     inlineToolbar: true,

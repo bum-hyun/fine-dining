@@ -19,7 +19,7 @@ const Page = async ({ params }: { params: Promise<{ reviewId: string }> }) => {
         <div className={dateStyle}>{dayjs(post?.created_at).format('YYYY. MM. DD. HH:mm')}</div>
       </div>
       <hr className={dividerStyle} />
-      <article>{post?.editor_html && <div dangerouslySetInnerHTML={{ __html: post.editor_html }} />}</article>
+      <article className={articleStyle}>{post?.editor_html && <div dangerouslySetInnerHTML={{ __html: post.editor_html.replace(/<p>\s*<\/p>/g, '<p>&nbsp;</p>') }} />}</article>
     </section>
   );
 };
@@ -55,4 +55,10 @@ const writerStyle = css({
 
 const dateStyle = css({
   color: '#666',
+});
+
+const articleStyle = css({
+  '& img': {
+    marginTop: '6px',
+  },
 });

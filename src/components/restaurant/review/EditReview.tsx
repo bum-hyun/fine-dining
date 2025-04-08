@@ -1,7 +1,7 @@
 import EditorJSHTML from 'editorjs-html';
 import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Button from 'src/components/Button/Button';
 import { css } from 'styled-system/css';
 
@@ -80,13 +80,29 @@ const EditReview = ({ reviewId }: IEditReviewProps) => {
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const el = e.target;
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 'px';
+    setReviewTitle(el.value);
+  };
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+    }
+  }, [reviewTitle]);
+
   return (
     <div className={editorContainerStyle}>
       <div className={topButtonContainerStyle}>
         <Button onClick={handleClickEdit}>등록</Button>
       </div>
       <div className={titleContainerStyle}>
-        <input className={titleInputStyle} value={reviewTitle} onChange={(e) => setReviewTitle(e.target.value)} placeholder={'제목을 입력해주세요.'} />
+        <textarea ref={textareaRef} className={titleInputStyle} rows={1} value={reviewTitle} onChange={handleChange} placeholder={'제목을 입력해주세요.'} />
       </div>
       {restaurantNames && <Select value={Number(restaurantId)} options={options} onChange={(value) => setRestaurantId(value)} />}
       <Editor />
@@ -98,9 +114,10 @@ export default EditReview;
 
 const editorContainerStyle = css({
   position: 'relative',
-  maxWidth: '900px',
+  maxWidth: '836px',
   width: '100%',
   margin: '60px auto',
+  padding: '0 64px',
 });
 
 const topButtonContainerStyle = css({
@@ -117,4 +134,10 @@ const titleInputStyle = css({
   width: '100%',
   fontSize: '45px',
   fontWeight: '600',
+  border: 'none',
+  resize: 'none',
+  overflow: 'hidden',
+  lineHeight: '1.4',
+  padding: '8px 0',
+  outline: 'none',
 });

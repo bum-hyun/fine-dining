@@ -14,7 +14,6 @@ const Editor = () => {
     const editor = new EditorJS({
       holder: 'editorjs',
       tools: EditorTools,
-
       onReady: () => {
         const editor = editorCore.current;
         new Undo({ editor });
