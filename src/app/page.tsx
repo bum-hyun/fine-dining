@@ -11,10 +11,11 @@ export const metadata: Metadata = {};
 
 export default async function Home() {
   const queryClient = new QueryClient();
+  const params: IGetRestaurantsParams = { page: 0, limit: 10, status: 'active' };
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: [SERVICE_KEY.RESTAURANT.GET_RESTAURANTS, { page: 0, limit: 10 }],
-    queryFn: () => getRestaurants({ page: 0, limit: 10 }),
+    queryKey: [SERVICE_KEY.RESTAURANT.GET_RESTAURANTS, params],
+    queryFn: () => getRestaurants(params),
     initialPageParam: 0,
   });
 

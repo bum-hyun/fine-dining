@@ -8,7 +8,13 @@ export const getRestaurants = async (params: IGetRestaurantsParams): Promise<IRe
   const from = params.page * limit;
   const to = from + limit - 1;
 
-  const { data, error } = await supabase.from(database).select('*').eq('status', 'active').range(from, to);
+  let query = supabase.from(database).select('*').range(from, to);
+
+  if (params.status) {
+    query = query.eq('status', params.status);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     throw new Error(`GET Error: ${error.message}`);

@@ -1,4 +1,4 @@
-type RestaurantStatus = 'active' | 'pending' | 'rejected';
+type TRestaurantStatus = 'active' | 'pending' | 'rejected';
 
 interface IRestaurant {
   id: number;
@@ -14,7 +14,7 @@ interface IRestaurant {
   dinner_price: number;
   thumbnail?: string;
   currency: string;
-  status: RestaurantStatus;
+  status: TRestaurantStatus;
 }
 
 interface IPostRestaurant {
@@ -30,7 +30,7 @@ interface IPostRestaurant {
   dinner_price?: number;
   currency?: string;
   thumbnail?: string;
-  status?: RestaurantStatus;
+  status?: TRestaurantStatus;
 }
 
 interface IPutRestaurant extends IPostRestaurant {
@@ -102,4 +102,5 @@ interface IGetRestaurantsParams {
   star?: number;
   page: number;
   limit?: number;
+  status?: TRestaurantStatus | 'all';
 }
