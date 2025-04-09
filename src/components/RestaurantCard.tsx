@@ -54,7 +54,7 @@ const RestaurantCard = ({ item }: IRestaurantCardProps) => {
             </div>
           </div>
         )}
-        {item.thumbnail && <Image className={imageStyle} src={item.thumbnail} alt={'image'} width={300} height={315} priority />}
+        {item.thumbnail && <Image className={imageStyle} src={item.thumbnail} alt={'image'} fill sizes={'300px'} priority />}
       </div>
       <div className={infoWrapStyle}>
         <RestaurantTags tags={item.tags} />
