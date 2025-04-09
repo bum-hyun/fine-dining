@@ -116,6 +116,7 @@ const imageWrapOverlayStyle = css({
   height: '100%',
   backgroundColor: '#00000080',
   borderRadius: '16px',
+  zIndex: 1,
 });
 
 const buttonWrapStyle = css({
