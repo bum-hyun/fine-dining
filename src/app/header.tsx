@@ -71,7 +71,7 @@ const Header = () => {
       <nav className={containerStyle}>
         <div className={lefSideContainerStyle}>
           <div className={logoStyle} onClick={() => router.push(ROUTE_PATHS.HOME)}>
-            {isMobile && <Image src={Logo} alt={'logo'} width={80} height={80} />}
+            <Image src={Logo} alt={'logo'} width={40} height={40} />
             {!isMobile && <span>미식노트</span>}
           </div>
         </div>
@@ -105,7 +105,7 @@ const containerStyle = css({
 
 const lefSideContainerStyle = css({
   flex: 1,
-  padding: '0 8px',
+  padding: '0 8px 0 16px',
 });
 
 const logoStyle = css({
