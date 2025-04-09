@@ -39,7 +39,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <link rel="preconnect" href={`${process.env.NEXT_PUBLIC_SUPABASE_URL!}`} />
         <link rel="dns-prefetch" href={`${process.env.NEXT_PUBLIC_SUPABASE_URL!}`} />
         <link rel="shortcut icon" href="/favicon.ico" />
-        <meta name="naver-site-verification" content="803538aa5e9db451a9605ed7dca83a67bad98db2" />
       </Head>
       <ReactQueryProvider>
         <body className={css({ display: 'flex', flexDirection: 'column', height: '100vh' })}>
