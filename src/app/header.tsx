@@ -1,12 +1,15 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { css } from 'styled-system/css';
 
+import Logo from '@/assets/logo.png';
 import Button from '@/components/Button/Button';
 import { ROUTE_PATHS } from '@/constants/pathname';
+import { useIsMobile } from '@/hooks/useIsMobile';
 import { useUserStore } from '@/stores/userStore';
 import browserClient from '@/utils/supabase/client';
 
@@ -23,6 +26,7 @@ const Header = () => {
   const router = useRouter();
 
   const { isLoggedIn, setUser } = useUserStore();
+  const isMobile = useIsMobile();
 
   const [visible, setVisible] = useState(false);
   const [visibleReportModal, setVisibleReportModal] = useState(false);
@@ -66,9 +70,10 @@ const Header = () => {
     <>
       <nav className={containerStyle}>
         <div className={lefSideContainerStyle}>
-          <span className={logoStyle} onClick={() => router.push(ROUTE_PATHS.HOME)}>
-            미식노트
-          </span>
+          <div className={logoStyle} onClick={() => router.push(ROUTE_PATHS.HOME)}>
+            {isMobile && <Image src={Logo} alt={'logo'} width={80} height={80} />}
+            {!isMobile && <span>미식노트</span>}
+          </div>
         </div>
         <div className={rightSideContainerStyle}>
           <Button onClick={handleReport}>버그제보 및 개선점 제안</Button>
@@ -100,14 +105,17 @@ const containerStyle = css({
 
 const lefSideContainerStyle = css({
   flex: 1,
-  padding: '16px',
+  padding: '0 8px',
 });
 
 const logoStyle = css({
+  display: 'flex',
+  alignItems: 'center',
+  minWidth: '60px',
+  minHeight: '60px',
   fontSize: '24px',
   fontWeight: 700,
   color: '#fff',
-  backgroundColor: '#000',
   cursor: 'pointer',
 });
 
@@ -118,7 +126,7 @@ const emptyHeightStyle = css({
 });
 
 const rightSideContainerStyle = css({
-  flex: 1,
+  flex: 'none',
   display: 'flex',
   justifyContent: 'flex-end',
   padding: '16px',

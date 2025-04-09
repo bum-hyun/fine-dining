@@ -10,6 +10,11 @@ export const RESTAURANT_REVIEW_WITH_WRITER_SELECT = `
     id,
     nickname,
     email
+  ),
+  restaurant:restaurants!restaurant_reviews_restaurant_id_fkey (
+    id,
+    name,
+    tags
   )
 `;
 

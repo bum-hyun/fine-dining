@@ -69,6 +69,7 @@ interface IRestaurantReview {
   files: string[];
   text: string;
   writer: IRestaurantReviewWriter;
+  restaurant: Pick<IRestaurant, 'id' | 'name' | 'tags'>;
 }
 
 interface IPostRestaurantReview {
