@@ -64,10 +64,10 @@ const Header = () => {
 
   return (
     <>
-      <div className={containerStyle}>
+      <nav className={containerStyle}>
         <div className={lefSideContainerStyle}>
           <span className={logoStyle} onClick={() => router.push(ROUTE_PATHS.HOME)}>
-            Fine Dining
+            미식노트
           </span>
         </div>
         <div className={rightSideContainerStyle}>
@@ -75,7 +75,7 @@ const Header = () => {
           {!isLoggedIn && <Button onClick={handleClickLogin}>로그인</Button>}
           {isLoggedIn && <Button onClick={handleClickLogout}>로그아웃</Button>}
         </div>
-      </div>
+      </nav>
       <div className={emptyHeightStyle} />
       <LoginModal visible={visible} handleCloseModal={() => setVisible(false)} />
       <ReportModal visible={visibleReportModal} handleCloseModal={() => setVisibleReportModal(false)} />

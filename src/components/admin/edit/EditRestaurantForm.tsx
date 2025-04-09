@@ -68,7 +68,7 @@ const EditRestaurantForm = ({ payload, setPayload, editRestaurant }: IEditRestau
     <div className={css({ flex: 1, overflowX: 'hidden', overflowY: 'auto' })}>
       <div className={css({ maxWidth: '768px', margin: 'auto' })}>
         <div className={flex({ flexDirection: 'column', padding: '16px', gap: '24px' })}>
-          <button className={imageWrapStyle} onClick={() => inputRef.current?.click()} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+          <div className={imageWrapStyle} onClick={() => inputRef.current?.click()} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
             {isHover && (
               <div className={imageWrapOverlayStyle}>
                 <div className={buttonWrapStyle}>
@@ -78,7 +78,7 @@ const EditRestaurantForm = ({ payload, setPayload, editRestaurant }: IEditRestau
             )}
             {payload.thumbnail && <Image className={imageStyle} src={payload.thumbnail} width={236} height={315} alt={''} />}
             <input className={invisibleInputStyle} ref={inputRef} name={'thumbnail'} type={'file'} accept={'image/*'} onChange={handleUploadThumbnail} tabIndex={-1} />
-          </button>
+          </div>
 
           {INPUT_CONTENTS.map(({ label, name, type }) => (
             <div key={name} className={wrapStyle}>

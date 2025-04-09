@@ -5,7 +5,7 @@ import { ROUTE_PATHS } from '@/constants/pathname';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <section className={dashboardContainerStyle}>
+    <main className={dashboardContainerStyle}>
       <nav className={navContainerStyle}>
         <div>
           <Link className={navWrapStyle} href={ROUTE_PATHS.ADMIN.LIST}>
@@ -19,7 +19,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
       </nav>
       <div className={contentsContainerStyle}>{children}</div>
-    </section>
+    </main>
   );
 }
 

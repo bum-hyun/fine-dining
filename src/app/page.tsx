@@ -7,10 +7,7 @@ import RestaurantList from '@/components/RestaurantList';
 import { SERVICE_KEY } from '@/constants/service';
 import { getRestaurants } from '@/services/restaurant/restaurant_api';
 
-export const metadata: Metadata = {
-  title: '다이닝 후기 공유',
-  description: '전 세계에 있는 레스토랑에 다녀온 후기를 남겨주세요!',
-};
+export const metadata: Metadata = {};
 
 export default async function Home() {
   const queryClient = new QueryClient();

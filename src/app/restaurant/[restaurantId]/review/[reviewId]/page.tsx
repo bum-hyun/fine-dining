@@ -13,7 +13,7 @@ const Page = async ({ params }: { params: Promise<{ reviewId: string }> }) => {
   const post: IRestaurantReview | null = data;
 
   return (
-    <section className={containerStyle}>
+    <main className={containerStyle}>
       <h1 className={titleStyle}>{post?.title}</h1>
       <div className={writerAndDateContainerStyle}>
         <div className={writerStyle}>{post?.writer.nickname}</div>
@@ -22,7 +22,7 @@ const Page = async ({ params }: { params: Promise<{ reviewId: string }> }) => {
       </div>
       <hr className={dividerStyle} />
       <article className={articleStyle}>{post?.editor_html && <div dangerouslySetInnerHTML={{ __html: post.editor_html.replace(/<p>\s*<\/p>/g, '<p>&nbsp;</p>') }} />}</article>
-    </section>
+    </main>
   );
 };
 
