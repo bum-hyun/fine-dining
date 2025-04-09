@@ -32,7 +32,7 @@ const Page = () => {
   const { mutateAsync: putRestaurant } = usePutRestaurant();
 
   const editRestaurant = async () => {
-    await putRestaurant({ ...payload, id });
+    await putRestaurant({ ...payload, id, status: 'active' });
     await queryClient.invalidateQueries({ queryKey: ['restaurants'] });
     router.push(`${ROUTE_PATHS.ADMIN.LIST}`);
   };

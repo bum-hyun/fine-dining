@@ -24,6 +24,7 @@ const Page = () => {
     launch_price: 0,
     dinner_price: 0,
     currency: 'won',
+    status: 'active',
   });
 
   const { mutateAsync: postRestaurant } = usePostRestaurant();
