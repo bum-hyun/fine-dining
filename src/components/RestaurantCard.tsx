@@ -8,6 +8,7 @@ import Button from '@/components/Button/Button';
 import RestaurantTags from '@/components/RestaurantTags';
 import { ROUTE_PATHS } from '@/constants/pathname';
 import { usePageRouter } from '@/hooks/usePageRouter';
+import { useUserStore } from '@/stores/userStore';
 
 interface IRestaurantCardProps {
   item: IRestaurant;
@@ -17,6 +18,8 @@ const RestaurantCard = ({ item }: IRestaurantCardProps) => {
   const router = usePageRouter();
 
   const [isHover, setIsHover] = useState(false);
+
+  const { isLoggedIn } = useUserStore();
 
   const handleGoToRestaurantReview = (restaurantId: number) => {
     router.push({
@@ -48,9 +51,11 @@ const RestaurantCard = ({ item }: IRestaurantCardProps) => {
               <Button className={seeReviewButtonStyle} onClick={() => handleGoToRestaurantReview(item.id!)}>
                 <Link href={`/restaurant/${item.id}/review`}>후기 보기</Link>
               </Button>
-              <Button className={writeReviewButtonStyle} onClick={() => handleGoToRestaurantReviewEdit(item.id!)}>
-                <Link href={`/restaurant/${item.id}/review/new`}>후기 작성</Link>
-              </Button>
+              {isLoggedIn && (
+                <Button className={writeReviewButtonStyle} onClick={() => handleGoToRestaurantReviewEdit(item.id!)}>
+                  <Link href={`/restaurant/${item.id}/review/new`}>후기 작성</Link>
+                </Button>
+              )}
             </div>
           </div>
         )}
