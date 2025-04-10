@@ -66,8 +66,8 @@ const EditRestaurantForm = ({ payload, setPayload, editRestaurant }: IEditRestau
 
   return (
     <div className={css({ flex: 1, overflowX: 'hidden', overflowY: 'auto' })}>
-      <div className={css({ maxWidth: '768px', margin: 'auto' })}>
-        <div className={flex({ flexDirection: 'column', padding: '16px', gap: '24px' })}>
+      <div className={css({ margin: 'auto' })}>
+        <div className={flex({ flexDirection: 'column', gap: '24px' })}>
           <div className={imageWrapStyle} onClick={() => inputRef.current?.click()} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
             {isHover && (
               <div className={imageWrapOverlayStyle}>

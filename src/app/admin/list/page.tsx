@@ -65,7 +65,6 @@ export default Page;
 const listContainerStyle = css({
   display: 'flex',
   flexDirection: 'column',
-  padding: '24px 16px',
   gap: '16px',
   width: '100%',
   fontSize: '14px',

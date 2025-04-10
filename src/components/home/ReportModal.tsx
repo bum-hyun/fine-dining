@@ -37,7 +37,7 @@ const ReportModal = ({ visible, handleCloseModal }: IAddRestaurantModalProps) =>
       {isMounted && (
         <Modal visible={visible} onClose={handleCloseModal}>
           <div className={modalStyle}>
-            <div className={addRestaurantTextStyle}>버그를 제보해주세요.</div>
+            <div className={addRestaurantTextStyle}>버그 또는 개선 방향에 대해 알려주세요.</div>
             <div className={inputWrapStyle}>
               <textarea className={inputStyle} value={content} onChange={(e) => setContent(e.target.value)} />
             </div>

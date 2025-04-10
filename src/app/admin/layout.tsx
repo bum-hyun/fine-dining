@@ -17,6 +17,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             식당 추가
           </Link>
         </div>
+        <div>
+          <Link className={navWrapStyle} href={ROUTE_PATHS.ADMIN.REPORT}>
+            버그 및 개선점
+          </Link>
+        </div>
       </nav>
       <div className={contentsContainerStyle}>{children}</div>
     </main>
@@ -51,6 +56,6 @@ const navWrapStyle = css({
 const contentsContainerStyle = css({
   flex: '1',
   display: 'flex',
-  padding: '0 16px',
+  padding: '24px 32px',
   overflow: 'hidden',
 });

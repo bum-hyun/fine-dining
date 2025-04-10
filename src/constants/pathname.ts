@@ -10,6 +10,7 @@ export const ROUTE_PATHS = {
     ROOT: `/${ROUTE_KEYS.ADMIN}`,
     LIST: `/${ROUTE_KEYS.ADMIN}/list`,
     EDIT: `/${ROUTE_KEYS.ADMIN}/edit`,
+    REPORT: `/${ROUTE_KEYS.ADMIN}/report`,
   },
   RESTAURANT: {
     ROOT: `/${ROUTE_KEYS.RESTAURANT}`,
