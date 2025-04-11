@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { SERVICE_KEY } from '@/constants/service';
-import { getReports } from '@/services/reposrt/report_api';
+import { getReports, postReport } from '@/services/reposrt/report_api';
 
 export const useGetReports = () =>
   useQuery<IReport[]>({
