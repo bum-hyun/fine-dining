@@ -5,6 +5,8 @@ import EditReviewButton from '@/components/restaurant_review/EditReviewButton';
 import { DATABASE_NAMES, RESTAURANT_REVIEW_WITH_WRITER_SELECT } from '@/constants/database';
 import serverClient from '@/utils/supabase/server';
 
+export const revalidate = 60;
+
 export async function generateMetadata({ params }: { params: Promise<{ reviewId: string }> }) {
   const { reviewId } = await params;
   const supabase = await serverClient();
@@ -28,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ reviewId:
   return {
     title,
     description,
-    keywords: [...keywords, ...post.restaurant.tags, post.restaurant.name],
+    keywords: [...keywords, ...(post.restaurant?.tags ?? []), post.restaurant.name],
     openGraph: {
       title,
       description,

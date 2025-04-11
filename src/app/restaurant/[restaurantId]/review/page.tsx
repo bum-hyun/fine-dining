@@ -4,20 +4,13 @@ import RestaurantReviewList from '@/app/restaurant/[restaurantId]/review/Restaur
 import { SERVICE_KEY } from '@/constants/service';
 import { getRestaurantNames } from '@/services/restaurant/restaurant_api';
 import { getRestaurantReviews } from '@/services/restaurant_review/restaurant_review_api';
+import serverClient from '@/utils/supabase/server';
 
 export async function generateStaticParams() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/restaurants?select=id`, {
-    headers: {
-      apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    },
-    cache: 'no-store',
-  });
+  const supabase = await serverClient();
+  const { data } = await supabase.from('restaurants').select('id').eq('status', 'active').order('popularity', { ascending: false }).limit(50);
 
-  const restaurants = await res.json();
-
-  return restaurants.map((r: { id: number }) => ({
-    restaurantId: r.id.toString(),
-  }));
+  return data?.map((r) => ({ restaurantId: r.id.toString() })) || [];
 }
 
 export const dynamicParams = true;
