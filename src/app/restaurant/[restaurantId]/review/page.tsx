@@ -1,3 +1,4 @@
+import { createServerClient } from '@supabase/ssr';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 
 import RestaurantReviewList from '@/app/restaurant/[restaurantId]/review/RestaurantReviewList';
@@ -6,21 +7,19 @@ import { getRestaurantNames } from '@/services/restaurant/restaurant_api';
 import { getRestaurantReviews } from '@/services/restaurant_review/restaurant_review_api';
 
 export async function generateStaticParams() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/restaurants?select=id&status=eq.active&order=popularity.desc&limit=50`, {
-    headers: {
-      apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!}`,
+  const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
+    cookies: {
+      getAll() {
+        return [];
+      },
+      setAll() {
+        return;
+      },
     },
-    cache: 'no-store',
   });
+  const { data } = await supabase.from('restaurants').select('id').eq('status', 'active').order('popularity', { ascending: false }).limit(50);
 
-  const data = await res.json();
-
-  return (
-    data?.map((r: { id: number }) => ({
-      restaurantId: r.id.toString(),
-    })) || []
-  );
+  return data?.map((r) => ({ restaurantId: r.id.toString() })) || [];
 }
 
 export const dynamicParams = true;
