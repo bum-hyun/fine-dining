@@ -6,6 +6,8 @@ import { SERVICE_KEY } from '@/constants/service';
 import { getRestaurantReview } from '@/services/restaurant_review/restaurant_review_api';
 import serverClient from '@/utils/supabase/server';
 
+export const runtime = 'edge';
+
 export async function generateMetadata({ params }: { params: Promise<{ reviewId: string }> }) {
   const { reviewId } = await params;
   const supabase = await serverClient();
@@ -39,7 +41,6 @@ export async function generateMetadata({ params }: { params: Promise<{ reviewId:
 }
 
 export const revalidate = 60;
-export const dynamicParams = true;
 
 const Page = async ({ params }: { params: Promise<{ reviewId: string }> }) => {
   const queryClient = new QueryClient();

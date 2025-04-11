@@ -22,7 +22,6 @@ export async function generateStaticParams() {
   return data?.map((r) => ({ restaurantId: r.id.toString() })) || [];
 }
 
-export const dynamicParams = true;
 export const revalidate = 60;
 
 const Page = async (props: { params: Promise<{ restaurantId: string }> }) => {
