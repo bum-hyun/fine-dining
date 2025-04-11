@@ -5,6 +5,22 @@ import { SERVICE_KEY } from '@/constants/service';
 import { getRestaurantNames } from '@/services/restaurant/restaurant_api';
 import { getRestaurantReviews } from '@/services/restaurant_review/restaurant_review_api';
 
+export async function generateStaticParams() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/restaurants?select=id`, {
+    headers: {
+      apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    },
+    cache: 'no-store',
+  });
+
+  const restaurants = await res.json();
+
+  return restaurants.map((r: { id: number }) => ({
+    restaurantId: r.id.toString(),
+  }));
+}
+
+export const dynamicParams = true;
 export const revalidate = 60;
 
 const Page = async (props: { params: Promise<{ restaurantId: string }> }) => {
