@@ -1,4 +1,4 @@
-import { QueryClient } from '@tanstack/react-query';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 
 import RestaurantReview from '@/app/restaurant/[restaurantId]/review/[reviewId]/RestaurantReview';
 import { DATABASE_NAMES, RESTAURANT_REVIEW_WITH_WRITER_SELECT } from '@/constants/database';
@@ -49,7 +49,13 @@ const Page = async ({ params }: { params: Promise<{ reviewId: string }> }) => {
     queryFn: () => getRestaurantReview(Number(reviewId)),
   });
 
-  return <RestaurantReview reviewId={Number(reviewId)} />;
+  const dehydratedState = dehydrate(queryClient);
+
+  return (
+    <HydrationBoundary state={dehydratedState}>
+      <RestaurantReview reviewId={Number(reviewId)} />
+    </HydrationBoundary>
+  );
 };
 
 export default Page;
