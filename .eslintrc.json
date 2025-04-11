@@ -13,8 +13,8 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:jsx-a11y/recommended", // 접근성 체크
-    "prettier", // Prettier와 ESLint 호환 설정
+    "plugin:jsx-a11y/recommended",
+    "prettier",
     "plugin:prettier/recommended"
   ],
   "plugins": [

@@ -1,7 +1,7 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { SERVICE_KEY } from '@/constants/service';
-import { deleteRestaurant, getRestaurant, getRestaurantNames, getRestaurants, postRestaurant, putRestaurant } from '@/services/restaurant/restaurant_api';
+import { deleteRestaurant, getRestaurant, getRestaurantName, getRestaurantNames, getRestaurants, postRestaurant, putRestaurant } from '@/services/restaurant/restaurant_api';
 
 export const useGetRestaurants = (params: IGetRestaurantsParams) =>
   useInfiniteQuery({
@@ -56,4 +56,10 @@ export const useGetRestaurantNames = () =>
   useQuery({
     queryKey: [SERVICE_KEY.RESTAURANT.RESTAURANT_NAMES],
     queryFn: getRestaurantNames,
+  });
+
+export const useGetRestaurantName = (restaurantId: number) =>
+  useQuery({
+    queryKey: [SERVICE_KEY.RESTAURANT.RESTAURANT_NAMES],
+    queryFn: () => getRestaurantName(restaurantId),
   });

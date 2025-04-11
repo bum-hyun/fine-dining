@@ -1,8 +1,18 @@
 import { DATABASE_NAMES, RESTAURANT_REVIEW_WITH_WRITER_SELECT } from '@/constants/database';
 import supabase from '@/utils/supabase/client';
 
-export const getRestaurantReviews = async (id: number): Promise<IRestaurantReview[]> => {
-  const { data, error } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select('*').eq('restaurant_id', id).order('created_at', { ascending: true });
+export const getRestaurantReviews = async (params: IGetRestaurantReviewsParams): Promise<IRestaurantReview[]> => {
+  const limit = params.limit || 10;
+  const from = params.page * limit;
+  const to = from + limit - 1;
+
+  let query = supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select('*').eq('restaurant_id', params.restaurantId).order('created_at', { ascending: true }).range(from, to);
+
+  if (params.status) {
+    query = query.eq('status', params.status);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     throw new Error(`GET Error: ${error.message}`);
@@ -11,8 +21,8 @@ export const getRestaurantReviews = async (id: number): Promise<IRestaurantRevie
   return data;
 };
 
-export const getRestaurantReview = async (id: number): Promise<IRestaurantReview> => {
-  const { data, error } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select(RESTAURANT_REVIEW_WITH_WRITER_SELECT).eq('id', id).single();
+export const getRestaurantReview = async (reviewId: number): Promise<IRestaurantReview> => {
+  const { data, error } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select(RESTAURANT_REVIEW_WITH_WRITER_SELECT).eq('id', reviewId).single();
 
   if (error) {
     throw new Error(`GET Error: ${error.message}`);

@@ -1,12 +1,22 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { SERVICE_KEY } from '@/constants/service';
-import { getRestaurantReview, postRestaurantReview, putRestaurantReview } from '@/services/restaurant_review/restaurant_review_api';
+import { getRestaurantReview, getRestaurantReviews, postRestaurantReview, putRestaurantReview } from '@/services/restaurant_review/restaurant_review_api';
 
-export const useGetRestaurantReview = (id: number) =>
+export const useGetRestaurantReviews = (params: IGetRestaurantReviewsParams) =>
+  useInfiniteQuery({
+    queryKey: [SERVICE_KEY.RESTAURANT_REVIEW.GET_RESTAURANT_REVIEWS, params],
+    queryFn: ({ pageParam = 0 }) => getRestaurantReviews({ ...params, page: pageParam }),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.length === (params.limit || 10) ? allPages.length : undefined;
+    },
+    initialPageParam: 0,
+  });
+
+export const useGetRestaurantReview = (reviewId: number) =>
   useQuery<IRestaurantReview>({
-    queryKey: [SERVICE_KEY.RESTAURANT_REVIEW.GET_RESTAURANT_REVIEW, id],
-    queryFn: () => getRestaurantReview(id),
+    queryKey: [SERVICE_KEY.RESTAURANT_REVIEW.GET_RESTAURANT_REVIEW, reviewId],
+    queryFn: () => getRestaurantReview(reviewId),
   });
 
 export const usePostRestaurantReview = () => {

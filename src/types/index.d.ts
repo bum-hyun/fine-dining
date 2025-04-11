@@ -105,3 +105,10 @@ interface IGetRestaurantsParams {
   limit?: number;
   status?: TRestaurantStatus | 'all';
 }
+
+interface IGetRestaurantReviewsParams {
+  restaurantId: number;
+  page: number;
+  limit?: number;
+  status?: TRestaurantStatus | 'all';
+}
