@@ -21,13 +21,6 @@ const RestaurantCard = ({ item }: IRestaurantCardProps) => {
 
   const { isLoggedIn } = useUserStore();
 
-  const handleGoToRestaurantReview = (restaurantId: number) => {
-    router.push({
-      pathname: ROUTE_PATHS.RESTAURANT.REVIEW.LIST,
-      query: { restaurantId },
-    });
-  };
-
   const handleGoToRestaurantReviewEdit = (restaurantId: number) => {
     router.push({
       pathname: ROUTE_PATHS.RESTAURANT.REVIEW.NEW,
@@ -48,7 +41,7 @@ const RestaurantCard = ({ item }: IRestaurantCardProps) => {
                   </Link>
                 </Button>
               )}
-              <Button className={seeReviewButtonStyle} onClick={() => handleGoToRestaurantReview(item.id!)}>
+              <Button className={seeReviewButtonStyle}>
                 <Link href={`/restaurant/${item.id}/review`}>후기 보기</Link>
               </Button>
               {isLoggedIn && (
