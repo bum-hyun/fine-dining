@@ -47,7 +47,7 @@ const RestaurantReviewList = () => {
           <>
             {restaurantReviews!.map((post) => (
               <Link key={post.id} href={`/restaurant/${restaurantId}/review/${post.id}`} className={restaurantCardWrapStyle}>
-                <div className={imageWrapStyle}>{!isEmpty(post.files) && <Image className={imageStyle} src={post.files[0]} alt={'image'} width={300} height={315} priority />}</div>
+                <div className={imageWrapStyle}>{!isEmpty(post.files) && <Image className={imageStyle} src={post.files[0]} alt={'image'} width={300} height={315} />}</div>
                 <div>
                   <div className={restaurantCardTitleStyle}>{post.title}</div>
                   <div className={restaurantCardDateStyle}>{dayjs(post.created_at).format('YYYY. MM. DD')}</div>
