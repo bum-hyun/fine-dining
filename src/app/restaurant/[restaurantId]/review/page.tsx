@@ -46,7 +46,7 @@ const Page = async (props: { params: Promise<{ restaurantId: string }> }) => {
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <RestaurantReviewList />
+      <RestaurantReviewList key={restaurantId} />
     </HydrationBoundary>
   );
 };
