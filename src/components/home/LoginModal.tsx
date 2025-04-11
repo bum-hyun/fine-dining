@@ -18,7 +18,7 @@ const LoginModal = ({ visible, handleCloseModal }: ILoginModalProps) => {
     await browserClient.auth.signInWithOAuth({
       provider: 'kakao',
       options: {
-        redirectTo: process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/callback` : 'http://localhost:3000/auth/callback',
+        redirectTo: process.env.NODE_ENV === 'production' ? `https://${process.env.NEXT_PUBLIC_SUPABASE_URL}/auth/v1/callback` : 'http://localhost:3000/auth/callback',
       },
     });
   };
