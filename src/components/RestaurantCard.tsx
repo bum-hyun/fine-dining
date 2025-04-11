@@ -6,8 +6,6 @@ import { ellipsis } from 'styled-system/patterns';
 
 import Button from '@/components/Button/Button';
 import RestaurantTags from '@/components/RestaurantTags';
-import { ROUTE_PATHS } from '@/constants/pathname';
-import { usePageRouter } from '@/hooks/usePageRouter';
 import { useUserStore } from '@/stores/userStore';
 
 interface IRestaurantCardProps {
@@ -15,18 +13,9 @@ interface IRestaurantCardProps {
 }
 
 const RestaurantCard = ({ item }: IRestaurantCardProps) => {
-  const router = usePageRouter();
-
   const [isHover, setIsHover] = useState(false);
 
   const { isLoggedIn } = useUserStore();
-
-  const handleGoToRestaurantReviewEdit = (restaurantId: number) => {
-    router.push({
-      pathname: ROUTE_PATHS.RESTAURANT.REVIEW.NEW,
-      query: { restaurantId },
-    });
-  };
 
   return (
     <article className={containerStyle}>
@@ -35,19 +24,17 @@ const RestaurantCard = ({ item }: IRestaurantCardProps) => {
           <div className={imageWrapOverlayStyle}>
             <div className={buttonWrapStyle}>
               {item.reservation_url && (
-                <Button className={goToReservationButtonStyle}>
-                  <Link href={item.reservation_url} target={'_blank'}>
-                    예약 페이지
-                  </Link>
-                </Button>
+                <Link href={item.reservation_url} target={'_blank'}>
+                  <Button className={goToReservationButtonStyle}>예약 페이지</Button>
+                </Link>
               )}
-              <Button className={seeReviewButtonStyle}>
-                <Link href={`/restaurant/${item.id}/review`}>후기 보기</Link>
-              </Button>
+              <Link href={`/restaurant/${item.id}/review`}>
+                <Button className={seeReviewButtonStyle}>후기 보기</Button>
+              </Link>
               {isLoggedIn && (
-                <Button className={writeReviewButtonStyle} onClick={() => handleGoToRestaurantReviewEdit(item.id!)}>
-                  <Link href={`/restaurant/${item.id}/review/new`}>후기 작성</Link>
-                </Button>
+                <Link href={`/restaurant/${item.id}/review/new`}>
+                  <Button className={writeReviewButtonStyle}>후기 작성</Button>
+                </Link>
               )}
             </div>
           </div>
@@ -124,19 +111,23 @@ const buttonWrapStyle = css({
 });
 
 const goToReservationButtonStyle = css({
-  backgroundColor: 'green.400',
+  width: '110px',
+  backgroundColor: 'green.400  !important',
 
   _hover: {
-    backgroundColor: 'green.500',
+    backgroundColor: 'green.500  !important',
   },
 });
 
 const seeReviewButtonStyle = css({
-  backgroundColor: 'blue.400',
+  width: '110px',
+  backgroundColor: 'blue.400 !important',
 
   _hover: {
-    backgroundColor: 'blue.500',
+    backgroundColor: 'blue.500  !important',
   },
 });
 
-const writeReviewButtonStyle = css({});
+const writeReviewButtonStyle = css({
+  width: '110px',
+});

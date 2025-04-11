@@ -3,7 +3,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 
 import RestaurantReviewList from '@/app/restaurant/[restaurantId]/review/RestaurantReviewList';
 import { SERVICE_KEY } from '@/constants/service';
-import { getRestaurantNames } from '@/services/restaurant/restaurant_api';
+import { getRestaurantName } from '@/services/restaurant/restaurant_api';
 import { getRestaurantReviews } from '@/services/restaurant_review/restaurant_review_api';
 
 export async function generateStaticParams() {
@@ -32,8 +32,8 @@ const Page = async (props: { params: Promise<{ restaurantId: string }> }) => {
   const params: IGetRestaurantReviewsParams = { restaurantId: Number(restaurantId), page: 0, limit: 10 };
 
   await queryClient.prefetchQuery({
-    queryKey: [SERVICE_KEY.RESTAURANT.RESTAURANT_NAMES],
-    queryFn: getRestaurantNames,
+    queryKey: [SERVICE_KEY.RESTAURANT.RESTAURANT_NAME],
+    queryFn: () => getRestaurantName(Number(restaurantId)),
   });
 
   await queryClient.prefetchInfiniteQuery({

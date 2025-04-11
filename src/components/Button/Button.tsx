@@ -25,7 +25,6 @@ const button = cva({
     justifyContent: 'center',
     borderRadius: 'md',
     fontWeight: 'bold',
-    padding: '0.5rem 1rem',
     cursor: 'pointer',
     transition: 'background-color 0.2s ease, color 0.2s ease',
     _hover: {
