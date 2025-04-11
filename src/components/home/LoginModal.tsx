@@ -15,6 +15,7 @@ const LoginModal = ({ visible, handleCloseModal }: ILoginModalProps) => {
   const [isMounted, setIsMounted] = useState(false);
 
   const signInWithKakao = async () => {
+    alert(process.env.NODE_ENV);
     await browserClient.auth.signInWithOAuth({
       provider: 'kakao',
       options: {

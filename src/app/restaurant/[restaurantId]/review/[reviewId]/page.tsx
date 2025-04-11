@@ -6,8 +6,6 @@ import { SERVICE_KEY } from '@/constants/service';
 import { getRestaurantReview } from '@/services/restaurant_review/restaurant_review_api';
 import serverClient from '@/utils/supabase/server';
 
-export const runtime = 'edge';
-
 export async function generateMetadata({ params }: { params: Promise<{ reviewId: string }> }) {
   const { reviewId } = await params;
   const supabase = await serverClient();
