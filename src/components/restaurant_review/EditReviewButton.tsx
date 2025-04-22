@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { css } from 'styled-system/css';
 
 import { Button } from '@/components/Button';
+import { TRestaurantReview } from '@/dto/restaurant_reviews.dto';
 import { useUserStore } from '@/stores/userStore';
 
 interface IEditReviewButtonProps {
-  post?: IRestaurantReview | null;
+  post?: TRestaurantReview;
 }
 
 const EditReviewButton = ({ post }: IEditReviewButtonProps) => {

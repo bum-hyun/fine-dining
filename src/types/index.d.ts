@@ -18,18 +18,18 @@ interface IRestaurant {
 }
 
 interface IPostRestaurant {
-  name: string;
-  address?: string;
-  email?: string;
-  description?: string;
-  is_only_course?: boolean;
-  tel?: string;
-  reservation_url?: string;
-  tags?: string[];
-  launch_price?: number;
-  dinner_price?: number;
-  currency?: string;
-  thumbnail?: string;
+  name: string | null;
+  address: string | null;
+  email: string | null;
+  description: string | null;
+  is_only_course: boolean | null;
+  tel: string | null;
+  reservation_url: string | null;
+  tags: string[] | null;
+  launch_price: number | null;
+  dinner_price: number | null;
+  currency: string | null;
+  thumbnail: string | null;
   status?: TRestaurantStatus;
 }
 
@@ -74,7 +74,7 @@ interface IRestaurantReview {
 
 interface IPostRestaurantReview {
   restaurant_id: number;
-  title: string;
+  title: string | null;
   editor_html: string;
   editor_object: OutputData;
   user_id: string;

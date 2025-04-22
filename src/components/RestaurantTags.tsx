@@ -5,7 +5,7 @@ import ArrowIcon from '@/assets/ArrowIcon';
 import { isEmpty } from '@/utils/common';
 
 interface IRestaurantTagsProps {
-  tags: string[];
+  tags: string[] | null;
 }
 
 const RestaurantTags = ({ tags }: IRestaurantTagsProps) => {
@@ -64,7 +64,7 @@ const RestaurantTags = ({ tags }: IRestaurantTagsProps) => {
             </div>
           )}
           <div ref={scrollRef} className={tagList}>
-            {tags.map((tag) => (
+            {tags?.map((tag) => (
               <span key={tag} className={tagStyle}>
                 {tag}
               </span>

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 
 import EditRestaurantForm from '@/components/admin/edit/EditRestaurantForm';
 import { ROUTE_PATHS } from '@/constants/pathname';
+import { TPostRestaurant, TPutRestaurant } from '@/dto/restaurants.dto';
 import { useGetRestaurant, usePutRestaurant } from '@/services/restaurant/restaurant_queries';
 
 const Page = () => {
@@ -14,7 +15,7 @@ const Page = () => {
   const id = Number(params.id as string);
   const queryClient = useQueryClient();
 
-  const [payload, setPayload] = useState<IPostRestaurant>({
+  const [payload, setPayload] = useState<TPostRestaurant | TPutRestaurant>({
     name: '',
     address: '',
     email: '',
@@ -25,10 +26,11 @@ const Page = () => {
     tags: [],
     launch_price: 0,
     dinner_price: 0,
+    thumbnail: '',
     currency: 'won',
   });
 
-  const { data } = useGetRestaurant(Number(id));
+  const { data } = useGetRestaurant(id);
   const { mutateAsync: putRestaurant } = usePutRestaurant();
 
   const editRestaurant = async () => {

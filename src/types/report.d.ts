@@ -4,8 +4,8 @@ interface IPostReportPayload {
 }
 
 interface IReport {
-  id: number;
-  content: string;
-  user_id: string;
-  created_at: string;
+  id: string;
+  content: string | null;
+  user_id: string | null;
+  created_at: string | null;
 }

@@ -1,9 +1,7 @@
 import { DATABASE_NAMES, RESTAURANT_REVIEW_WITH_WRITER_SELECT } from '@/constants/database';
-import { PostRestaurantReviewSchema, PutRestaurantReviewSchema, RestaurantReviewSchema, TRestaurantReview } from '@/dto/restaurant_reviews.dto';
+import { RestaurantReviewSchema, TRestaurantReview } from '@/dto/restaurant_reviews.dto';
 import supabase from '@/utils/supabase/client';
-import { handleSupabaseList, handleSupabaseSingle } from '@/utils/supabase/supabaseHelpers';
 
-// 리뷰 리스트 조회
 export const getRestaurantReviews = async (params: IGetRestaurantReviewsParams): Promise<TRestaurantReview[]> => {
   const limit = params.limit || 10;
   const from = params.page * limit;
@@ -20,24 +18,41 @@ export const getRestaurantReviews = async (params: IGetRestaurantReviewsParams):
     query = query.eq('status', params.status);
   }
 
-  return handleSupabaseList(query, RestaurantReviewSchema, '리뷰 목록 조회 실패');
+  const { data, error } = await query;
+
+  if (error || !data) {
+    throw new Error(`GET Error: ${error.message}`);
+  }
+
+  return data.map((item) => RestaurantReviewSchema.parse(item));
 };
 
-// 리뷰 단건 조회
 export const getRestaurantReview = async (reviewId: number): Promise<TRestaurantReview> => {
-  return handleSupabaseSingle(supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select(RESTAURANT_REVIEW_WITH_WRITER_SELECT).eq('id', reviewId).single(), RestaurantReviewSchema, '리뷰 조회 실패');
+  const { data, error } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select(RESTAURANT_REVIEW_WITH_WRITER_SELECT).eq('id', reviewId).single();
+
+  if (error) {
+    throw new Error(`GET Error: ${error.message}`);
+  }
+
+  return RestaurantReviewSchema.parse(data);
 };
 
-// 리뷰 등록
 export const postRestaurantReview = async (payload: IPostRestaurantReview): Promise<TRestaurantReview> => {
-  PostRestaurantReviewSchema.parse(payload);
+  const { data, error } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).insert(payload).select();
+  console.log(data);
+  if (error) {
+    throw new Error(`POST Error: ${error.message}`);
+  }
 
-  return handleSupabaseSingle(supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).insert(payload).select().single(), RestaurantReviewSchema, '리뷰 등록 실패');
+  return RestaurantReviewSchema.parse(data[0]);
 };
 
-// 리뷰 수정
-export const putRestaurantReview = async (payload: IPutRestaurantReview): Promise<TRestaurantReview> => {
-  PutRestaurantReviewSchema.parse(payload);
+export const putRestaurantReview = async (payload: IPutRestaurantReview) => {
+  const { data, error } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).update(payload).eq('id', payload.id).select();
 
-  return handleSupabaseSingle(supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).update(payload).eq('id', payload.id).select().single(), RestaurantReviewSchema, '리뷰 수정 실패');
+  if (error) {
+    throw new Error(`PUT Error: ${error.message}`);
+  }
+
+  return data;
 };

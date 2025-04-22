@@ -1,6 +1,7 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { SERVICE_KEY } from '@/constants/service';
+import { TPostRestaurant, TPutRestaurant } from '@/dto/restaurants.dto';
 import { deleteRestaurant, getRestaurant, getRestaurantName, getRestaurantNames, getRestaurants, postRestaurant, putRestaurant } from '@/services/restaurant/restaurant_api';
 
 export const useGetRestaurants = (params: IGetRestaurantsParams) =>
@@ -14,7 +15,7 @@ export const useGetRestaurants = (params: IGetRestaurantsParams) =>
   });
 
 export const useGetRestaurant = (id: number) =>
-  useQuery<IRestaurant>({
+  useQuery({
     queryKey: [SERVICE_KEY.RESTAURANT.GET_RESTAURANT, id],
     queryFn: () => getRestaurant(id),
   });
@@ -23,7 +24,7 @@ export const usePostRestaurant = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: [SERVICE_KEY.RESTAURANT.POST_RESTAURANT],
-    mutationFn: (payload: IPostRestaurant) => postRestaurant(payload),
+    mutationFn: (payload: TPostRestaurant) => postRestaurant(payload),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: [SERVICE_KEY.RESTAURANT.GET_RESTAURANTS, SERVICE_KEY.RESTAURANT.RESTAURANT_NAMES] });
     },
@@ -34,7 +35,7 @@ export const usePutRestaurant = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: [SERVICE_KEY.RESTAURANT.PUT_RESTAURANT],
-    mutationFn: (payload: IPutRestaurant) => putRestaurant(payload),
+    mutationFn: (payload: TPutRestaurant) => putRestaurant(payload),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: [SERVICE_KEY.RESTAURANT.GET_RESTAURANTS, SERVICE_KEY.RESTAURANT.RESTAURANT_NAMES] });
     },

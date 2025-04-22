@@ -5,18 +5,19 @@ import { Dispatch, SetStateAction, useCallback, useRef, useState } from 'react';
 import { css } from 'styled-system/css';
 import { flex } from 'styled-system/patterns';
 
+import { TPostRestaurant, TPutRestaurant } from '@/dto/restaurants.dto';
 import supabase from '@/utils/supabase/client';
 
 interface IEditRestaurantFormProps {
-  payload: IPostRestaurant | IPutRestaurant;
-  setPayload: Dispatch<SetStateAction<IPostRestaurant | IPutRestaurant>>;
+  payload: TPostRestaurant | TPutRestaurant;
+  setPayload: Dispatch<SetStateAction<TPostRestaurant | TPutRestaurant>>;
   editRestaurant: () => void;
 }
 
 const EditRestaurantForm = ({ payload, setPayload, editRestaurant }: IEditRestaurantFormProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const INPUT_CONTENTS: { label: string; name: keyof IPostRestaurant; type?: string }[] = [
+  const INPUT_CONTENTS: { label: string; name: keyof TPostRestaurant; type?: string }[] = [
     { label: '이름', name: 'name' },
     { label: '주소', name: 'address' },
     { label: '전화번호', name: 'tel' },

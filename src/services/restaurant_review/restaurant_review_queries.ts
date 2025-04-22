@@ -14,7 +14,7 @@ export const useGetRestaurantReviews = (params: IGetRestaurantReviewsParams) =>
   });
 
 export const useGetRestaurantReview = (reviewId: number) =>
-  useQuery<IRestaurantReview>({
+  useQuery({
     queryKey: [SERVICE_KEY.RESTAURANT_REVIEW.GET_RESTAURANT_REVIEW, reviewId],
     queryFn: () => getRestaurantReview(reviewId),
   });

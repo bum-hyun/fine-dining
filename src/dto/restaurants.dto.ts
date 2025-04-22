@@ -40,7 +40,7 @@ export const PostRestaurantSchema = RestaurantSchema.omit({
     status: true,
   })
   .extend({
-    name: z.string(),
+    name: z.string().nullable(),
   });
 
 // IPutRestaurant

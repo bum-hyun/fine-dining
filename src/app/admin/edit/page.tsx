@@ -6,13 +6,14 @@ import { useCallback, useState } from 'react';
 
 import EditRestaurantForm from '@/components/admin/edit/EditRestaurantForm';
 import { ROUTE_PATHS } from '@/constants/pathname';
+import { TPostRestaurant } from '@/dto/restaurants.dto';
 import { usePostRestaurant } from '@/services/restaurant/restaurant_queries';
 
 const Page = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const [payload, setPayload] = useState<IPostRestaurant>({
+  const [payload, setPayload] = useState<TPostRestaurant>({
     name: '',
     address: '',
     email: '',
@@ -24,6 +25,7 @@ const Page = () => {
     launch_price: 0,
     dinner_price: 0,
     currency: 'won',
+    thumbnail: '',
     status: 'active',
   });
 

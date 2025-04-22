@@ -10,6 +10,7 @@ import { css } from 'styled-system/css';
 import { ellipsis, flex } from 'styled-system/patterns';
 
 import { SERVICE_KEY } from '@/constants/service';
+import { TRestaurantReview } from '@/dto/restaurant_reviews.dto';
 import { useIntersect } from '@/hooks/useIntersect';
 import { useGetRestaurantName } from '@/services/restaurant/restaurant_queries';
 import { useGetRestaurantReviews } from '@/services/restaurant_review/restaurant_review_queries';
@@ -33,7 +34,7 @@ const RestaurantReviewList = () => {
 
   const intersectRef = useIntersect(onIntersect, hasNextPage);
 
-  const handleClickRestaurant = (review: IRestaurantReview) => {
+  const handleClickRestaurant = (review: TRestaurantReview) => {
     queryClient.setQueryData([SERVICE_KEY.RESTAURANT_REVIEW.GET_RESTAURANT_REVIEW, review.id], review);
   };
 

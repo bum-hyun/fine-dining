@@ -41,7 +41,7 @@ const EditReview = ({ reviewId }: IEditReviewProps) => {
 
   const options = useMemo(() => {
     if (!restaurantNames) return [];
-    return restaurantNames.map((item) => ({ label: item.name, value: item.id }));
+    return restaurantNames.map((item) => ({ label: item.name!, value: item.id }));
   }, [restaurantNames]);
 
   const handleClickEdit = async () => {

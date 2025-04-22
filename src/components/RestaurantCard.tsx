@@ -8,10 +8,11 @@ import { ellipsis } from 'styled-system/patterns';
 
 import Button from '@/components/Button/Button';
 import RestaurantTags from '@/components/RestaurantTags';
+import { TRestaurant } from '@/dto/restaurants.dto';
 import { useUserStore } from '@/stores/userStore';
 
 interface IRestaurantCardProps {
-  item: IRestaurant;
+  item: TRestaurant;
 }
 
 const RestaurantCard = ({ item }: IRestaurantCardProps) => {

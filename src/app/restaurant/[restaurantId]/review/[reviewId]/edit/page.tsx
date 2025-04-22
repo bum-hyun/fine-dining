@@ -10,16 +10,16 @@ import { useEditorStore } from '@/stores/editorStore';
 const Page = () => {
   const params = useParams();
 
-  const [reviewId] = useState<string | number>(params.reviewId as string);
+  const [reviewId] = useState<number>(Number(params.reviewId as string));
 
   const { editor, setReviewTitle } = useEditorStore();
 
-  const { data: restaurantReview } = useGetRestaurantReview(Number(reviewId));
+  const { data: restaurantReview } = useGetRestaurantReview(reviewId);
 
   useEffect(() => {
     if (editor && restaurantReview) {
       editor.render(restaurantReview.editor_object);
-      setReviewTitle(restaurantReview.title);
+      setReviewTitle(restaurantReview.title || '');
     }
   }, [editor, restaurantReview]);
 
