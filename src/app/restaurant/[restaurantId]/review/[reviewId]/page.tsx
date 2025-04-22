@@ -3,15 +3,16 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 import RestaurantReview from '@/app/restaurant/[restaurantId]/review/[reviewId]/RestaurantReview';
 import { DATABASE_NAMES, RESTAURANT_REVIEW_WITH_WRITER_SELECT } from '@/constants/database';
 import { SERVICE_KEY } from '@/constants/service';
+import { RestaurantReviewSchema } from '@/dto/restaurant_reviews.dto';
 import { getRestaurantReview } from '@/services/restaurant_review/restaurant_review_api';
 import serverClient from '@/utils/supabase/server';
 
 export async function generateMetadata({ params }: { params: Promise<{ reviewId: string }> }) {
-  const { reviewId } = await params;
+  const reviewId = Number((await params).reviewId);
   const supabase = await serverClient();
 
   const { data } = await supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select(RESTAURANT_REVIEW_WITH_WRITER_SELECT).eq('id', reviewId).single();
-  const post: IRestaurantReview | null = data;
+  const post = RestaurantReviewSchema.parse(data);
   const keywords = ['미식노트', '레스토랑 후기', '맛집 리뷰', '다이닝', '다이닝 후기'];
 
   if (!post) {

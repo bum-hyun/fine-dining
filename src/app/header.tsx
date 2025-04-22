@@ -27,7 +27,7 @@ const Header = () => {
 
   const { isLoggedIn, setUser } = useUserStore();
   const isMobile = useIsMobile();
-
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [visible, setVisible] = useState(false);
   const [visibleReportModal, setVisibleReportModal] = useState(false);
 
@@ -45,8 +45,6 @@ const Header = () => {
       id: user.id,
       provider: user.app_metadata.provider,
     });
-
-    return user;
   };
 
   const handleClickLogin = () => {
@@ -64,6 +62,7 @@ const Header = () => {
 
   useEffect(() => {
     getUser();
+    setIsAuthChecked(true);
   }, []);
 
   return (
@@ -77,8 +76,7 @@ const Header = () => {
         </div>
         <div className={rightSideContainerStyle}>
           <Button onClick={handleReport}>버그제보 및 개선점 제안</Button>
-          {!isLoggedIn && <Button onClick={handleClickLogin}>로그인</Button>}
-          {isLoggedIn && <Button onClick={handleClickLogout}>로그아웃</Button>}
+          {isAuthChecked && (isLoggedIn ? <Button onClick={handleClickLogout}>로그아웃</Button> : <Button onClick={handleClickLogin}>로그인</Button>)}
         </div>
       </nav>
       <div className={emptyHeightStyle} />

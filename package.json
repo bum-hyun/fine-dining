@@ -4,13 +4,15 @@
   "private": true,
   "scripts": {
     "prepare": "husky",
+    "prebuild": "npx panda && yarn run update-types",
     "postbuild": "next-sitemap",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "panda": "npx panda",
-    "panda:dev": "npx panda --watch"
+    "panda:dev": "npx panda --watch",
+    "update-types": "npx supabase gen types --lang=typescript --project-id \"azbftwipldzwsdkdztql\" > src/types/supabase.ts"
   },
   "dependencies": {
     "@editorjs/delimiter": "^1.4.2",
@@ -61,6 +63,7 @@
     "lint-staged": "^15.2.10",
     "msw": "^2.6.4",
     "prettier": "^3.3.3",
+    "supabase": ">=1.8.1",
     "typescript": "^5"
   },
   "msw": {

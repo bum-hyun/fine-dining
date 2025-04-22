@@ -2,7 +2,7 @@
 
 import { css } from 'styled-system/css';
 
-import { useGetReports } from '@/services/reposrt/report_queries';
+import { useGetReports } from '@/services/report/report_queries';
 
 const Page = () => {
   const { data } = useGetReports();

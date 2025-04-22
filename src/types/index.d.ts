@@ -2,18 +2,18 @@ type TRestaurantStatus = 'active' | 'pending' | 'rejected';
 
 interface IRestaurant {
   id: number;
-  name: string;
-  address: string;
-  email: string;
-  description: string;
+  name: string | null;
+  address: string | null;
+  email: string | null;
+  description: string | null;
   is_only_course: boolean;
-  tel: string;
-  reservation_url: string;
-  tags: string[];
-  launch_price: number;
-  dinner_price: number;
-  thumbnail?: string;
-  currency: string;
+  tel: string | null;
+  reservation_url: string | null;
+  tags: string[] | null;
+  launch_price: number | null;
+  dinner_price: number | null;
+  thumbnail: string | null;
+  currency: string | null;
   status: TRestaurantStatus;
 }
 
@@ -56,9 +56,9 @@ interface IUser {
 interface IRestaurantReview {
   id: number;
   created_at: string;
-  restaurant_id: number;
-  title: string;
-  editor_html: string;
+  restaurant_id: number | null;
+  title: string | null;
+  editor_html: string | null;
   editor_object: {
     blocks: { id: string; type: string; data: { [key: string]: string | number } }[];
     time: number;

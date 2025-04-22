@@ -3,7 +3,7 @@ import { css } from 'styled-system/css';
 
 import { Button } from '@/components/Button';
 import Modal from '@/components/Overlay/Modal';
-import { usePostReport } from '@/services/reposrt/report_queries';
+import { usePostReport } from '@/services/report/report_queries';
 import { useUserStore } from '@/stores/userStore';
 
 interface IAddRestaurantModalProps {
