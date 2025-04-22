@@ -1,5 +1,6 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { NotebookText } from 'lucide-react';
 import Image from 'next/image';
@@ -8,17 +9,19 @@ import { useParams } from 'next/navigation';
 import { css } from 'styled-system/css';
 import { ellipsis, flex } from 'styled-system/patterns';
 
+import { SERVICE_KEY } from '@/constants/service';
 import { useIntersect } from '@/hooks/useIntersect';
 import { useGetRestaurantName } from '@/services/restaurant/restaurant_queries';
 import { useGetRestaurantReviews } from '@/services/restaurant_review/restaurant_review_queries';
 import { isEmpty } from '@/utils/common';
 
 const RestaurantReviewList = () => {
-  const { restaurantId } = useParams();
+  const queryClient = useQueryClient();
+  const restaurantId = Number(useParams().restaurantId);
 
-  const params: IGetRestaurantReviewsParams = { restaurantId: Number(restaurantId), page: 0, limit: 10 };
+  const params: IGetRestaurantReviewsParams = { restaurantId, page: 0, limit: 10 };
 
-  const { data: restaurantName } = useGetRestaurantName(Number(restaurantId));
+  const { data: restaurantName } = useGetRestaurantName(restaurantId);
   const { data, fetchNextPage, hasNextPage } = useGetRestaurantReviews(params);
   const restaurantReviews = data?.pages.flat() ?? [];
 
@@ -29,6 +32,10 @@ const RestaurantReviewList = () => {
   };
 
   const intersectRef = useIntersect(onIntersect, hasNextPage);
+
+  const handleClickRestaurant = (review: IRestaurantReview) => {
+    queryClient.setQueryData([SERVICE_KEY.RESTAURANT_REVIEW.GET_RESTAURANT_REVIEW, review.id], review);
+  };
 
   return (
     <div className={contentsWrapStyle}>
@@ -45,8 +52,8 @@ const RestaurantReviewList = () => {
         )}
         {!isEmpty(restaurantReviews) && (
           <>
-            {restaurantReviews!.map((post) => (
-              <Link key={post.id} href={`/restaurant/${restaurantId}/review/${post.id}`} className={restaurantCardWrapStyle}>
+            {restaurantReviews.map((post) => (
+              <Link key={post.id} className={restaurantCardWrapStyle} href={`/restaurant/${restaurantId}/review/${post.id}`} onClick={() => handleClickRestaurant(post)}>
                 <div className={imageWrapStyle}>{!isEmpty(post.files) && <Image className={imageStyle} src={post.files[0]} alt={'image'} width={300} height={315} />}</div>
                 <div>
                   <div className={restaurantCardTitleStyle}>{post.title}</div>

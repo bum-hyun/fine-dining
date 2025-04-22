@@ -38,22 +38,20 @@ export async function generateMetadata({ params }: { params: Promise<{ reviewId:
   };
 }
 
-export const revalidate = 60;
-
 const Page = async ({ params }: { params: Promise<{ reviewId: string }> }) => {
   const queryClient = new QueryClient();
-  const { reviewId } = await params;
+  const reviewId = Number((await params).reviewId);
 
   await queryClient.prefetchQuery({
     queryKey: [SERVICE_KEY.RESTAURANT_REVIEW.GET_RESTAURANT_REVIEW, reviewId],
-    queryFn: () => getRestaurantReview(Number(reviewId)),
+    queryFn: () => getRestaurantReview(reviewId),
   });
 
   const dehydratedState = dehydrate(queryClient);
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <RestaurantReview reviewId={Number(reviewId)} />
+      <RestaurantReview reviewId={reviewId} />
     </HydrationBoundary>
   );
 };

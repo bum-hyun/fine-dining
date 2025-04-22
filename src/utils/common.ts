@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-export const isEmpty = (value: unknown) => {
+export const isEmpty = (value: object | string) => {
   if (value == null) return true;
   if (typeof value === 'string') return value.trim().length === 0;
   if (Array.isArray(value)) return value.length === 0;

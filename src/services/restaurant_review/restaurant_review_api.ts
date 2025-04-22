@@ -6,7 +6,12 @@ export const getRestaurantReviews = async (params: IGetRestaurantReviewsParams):
   const from = params.page * limit;
   const to = from + limit - 1;
 
-  let query = supabase.from(DATABASE_NAMES.RESTAURANT_REVIEWS).select('*').eq('restaurant_id', params.restaurantId).order('created_at', { ascending: true }).range(from, to);
+  let query = supabase
+    .from(DATABASE_NAMES.RESTAURANT_REVIEWS)
+    .select(RESTAURANT_REVIEW_WITH_WRITER_SELECT)
+    .eq('restaurant_id', params.restaurantId)
+    .order('created_at', { ascending: true })
+    .range(from, to);
 
   if (params.status) {
     query = query.eq('status', params.status);
