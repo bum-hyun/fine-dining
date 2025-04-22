@@ -49,12 +49,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <SpeedInsights />
           <Analytics />
         </body>
-        {/*{env === 'development' && (*/}
-        {/*  <InitializeWorker>*/}
-        {/*    <body>{children}</body>*/}
-        {/*  </InitializeWorker>*/}
-        {/*)}*/}
-        {/*{env !== 'development' && <body>{children}</body>}*/}
       </ReactQueryProvider>
     </html>
   );
