@@ -66,11 +66,6 @@
     "supabase": ">=1.8.1",
     "typescript": "^5"
   },
-  "msw": {
-    "workerDirectory": [
-      "public"
-    ]
-  },
   "husky": {
     "hooks": {
       "pre-commit": "echo 'pre commit....'",

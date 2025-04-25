@@ -1,15 +1,17 @@
 import { useEffect, useRef } from 'react';
 
-export const useIntersect = (onIntersect: () => void, enabled: boolean = true) => {
+export const useIntersect = (fetchNextPage: () => void, hasNextPage: boolean = true) => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!enabled || !ref.current) return;
+    if (!hasNextPage || !ref.current) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          onIntersect();
+          if (hasNextPage) {
+            fetchNextPage();
+          }
         }
       },
       {
@@ -20,7 +22,7 @@ export const useIntersect = (onIntersect: () => void, enabled: boolean = true) =
     observer.observe(ref.current);
 
     return () => observer.disconnect();
-  }, [onIntersect, enabled]);
+  }, [fetchNextPage, hasNextPage]);
 
   return ref;
 };

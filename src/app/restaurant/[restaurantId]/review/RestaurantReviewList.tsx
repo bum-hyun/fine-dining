@@ -26,13 +26,7 @@ const RestaurantReviewList = () => {
   const { data, fetchNextPage, hasNextPage } = useGetRestaurantReviews(params);
   const restaurantReviews = data?.pages.flat() ?? [];
 
-  const onIntersect = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  const intersectRef = useIntersect(onIntersect, hasNextPage);
+  const intersectRef = useIntersect(fetchNextPage, hasNextPage);
 
   const handleClickRestaurant = (review: TRestaurantReview) => {
     queryClient.setQueryData([SERVICE_KEY.RESTAURANT_REVIEW.GET_RESTAURANT_REVIEW, review.id], review);

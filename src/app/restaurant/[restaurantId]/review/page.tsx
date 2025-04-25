@@ -22,8 +22,6 @@ export async function generateStaticParams() {
   return data?.map((r) => ({ restaurantId: r.id.toString() })) || [];
 }
 
-export const revalidate = 60;
-
 const Page = async ({ params }: { params: Promise<{ restaurantId: string }> }) => {
   const queryClient = new QueryClient();
   const restaurantId = Number((await params).restaurantId);
@@ -31,7 +29,7 @@ const Page = async ({ params }: { params: Promise<{ restaurantId: string }> }) =
   const reviewsParams: IGetRestaurantReviewsParams = { restaurantId: restaurantId, page: 0, limit: 10 };
 
   await queryClient.prefetchQuery({
-    queryKey: [SERVICE_KEY.RESTAURANT.RESTAURANT_NAME],
+    queryKey: [SERVICE_KEY.RESTAURANT.RESTAURANT_NAME, restaurantId],
     queryFn: () => getRestaurantName(restaurantId),
   });
 

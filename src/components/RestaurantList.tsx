@@ -12,13 +12,7 @@ const RestaurantList = () => {
 
   const { data, fetchNextPage, hasNextPage } = useGetRestaurants(params);
 
-  const onIntersect = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  const intersectRef = useIntersect(onIntersect, hasNextPage);
+  const intersectRef = useIntersect(fetchNextPage, hasNextPage);
 
   const restaurants = data?.pages.flat() ?? [];
 

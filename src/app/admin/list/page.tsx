@@ -17,13 +17,7 @@ const Page = () => {
   const { data, fetchNextPage, hasNextPage, refetch } = useGetRestaurants(params);
   const { mutateAsync: deleteRestaurant } = useDeleteRestaurant();
 
-  const onIntersect = () => {
-    if (hasNextPage) {
-      fetchNextPage();
-    }
-  };
-
-  const intersectRef = useIntersect(onIntersect, hasNextPage);
+  const intersectRef = useIntersect(fetchNextPage, hasNextPage);
 
   const handleDeleteRestaurant = useCallback(async (id: number) => {
     await deleteRestaurant(id);

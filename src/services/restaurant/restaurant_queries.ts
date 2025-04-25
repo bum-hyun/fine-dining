@@ -61,6 +61,6 @@ export const useGetRestaurantNames = () =>
 
 export const useGetRestaurantName = (restaurantId: number) =>
   useQuery({
-    queryKey: [SERVICE_KEY.RESTAURANT.RESTAURANT_NAME],
+    queryKey: [SERVICE_KEY.RESTAURANT.RESTAURANT_NAME, restaurantId],
     queryFn: () => getRestaurantName(restaurantId),
   });
