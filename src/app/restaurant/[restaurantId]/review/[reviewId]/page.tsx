@@ -1,3 +1,5 @@
+'use client';
+
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 
 import RestaurantReview from '@/app/restaurant/[restaurantId]/review/[reviewId]/RestaurantReview';
